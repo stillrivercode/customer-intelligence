@@ -1,271 +1,243 @@
-# AI Workflow Template
+# Customer Intelligence Dashboard
 
-A CLI tool to create AI-powered GitHub workflow automation projects. Get AI-assisted development up and running in your
-GitHub repository in minutes.
+A comprehensive B2B SaaS customer health monitoring dashboard that demonstrates **Document Driven Development (DDD)** methodology through hands-on workshops. Built with modern React, TypeScript, and real-world API integrations.
+
+## 🎯 Workshop Overview
+
+This project serves as the primary example for Stillriver Software Solutions' **Document Driven Development Workshop Series**. Participants build a production-ready customer intelligence platform while learning to leverage AI for specification-driven code generation.
+
+### Key Learning Objectives
+
+- ✅ **Master DDD methodology** - Specification-first development approach
+- ✅ **AI-assisted coding** - Generate production code from detailed specifications  
+- ✅ **Real-world integration** - Connect to external APIs with proper error handling
+- ✅ **Business intelligence** - Build meaningful customer health scoring algorithms
+- ✅ **Modern React patterns** - Hooks, context, performance optimization
+- ✅ **Production readiness** - Testing, security, deployment considerations
 
 ## 🚀 Quick Start
 
-### Install via npm
+### Prerequisites
+- Node.js 18+ 
+- API Ninjas account (free tier available)
+- Basic React/TypeScript knowledge
+
+### Installation
 
 ```bash
-# Install globally
-npm install -g @stillrivercode/customer-intelligence
+# Clone the repository
+git clone https://github.com/stillrivercode/customer-intelligence.git
+cd customer-intelligence
 
-# Create a new project
-customer-intelligence my-ai-project
-cd my-ai-project
+# Install dependencies
+npm install
 
-# Run the local install script
-./install.sh
-```
-
-### Or use npx (no installation required)
-
-```bash
-# Create project directly
-npx @stillrivercode/customer-intelligence my-ai-project
-cd my-ai-project
-
-# Run the local install script
-./install.sh
-```
-
-## 🎯 What You Get
-
-✅ **GitHub Actions workflows** for AI task automation
-✅ **Issue templates** for requesting AI assistance
-✅ **Pre-configured labels** and automation
-✅ **Cost monitoring** and usage optimization
-✅ **Security scanning** and quality gates
-✅ **Complete documentation** for your team
-
-## 🛠️ Setup Process
-
-After running the init command, you'll have a complete project with:
-
-1. **AI-powered GitHub workflows** that respond to labeled issues
-2. **Issue templates** for different types of AI tasks
-3. **Automated quality checks** (linting, security, tests)
-4. **Cost controls** and monitoring
-5. **Documentation** tailored to your project
-
-### Manual Configuration Required
-
-The template creates all necessary files but **does not automatically configure secrets**. You'll need to set up:
-
-#### 1. Environment Variables (Optional for Local Development)
-
-Copy the provided template and configure your local environment:
-
-```bash
-# Copy template to create your local environment file
+# Set up environment
 cp .env.example .env
+# Edit .env with your API Ninjas key
 
-# Edit .env with your actual values
-# OPENROUTER_API_KEY=sk-or-your-actual-key-here
+# Start development server
+npm run dev
 ```
 
-#### 2. GitHub Repository Secrets (Required for CI/CD)
+### Get Your API Key
+1. Visit [api-ninjas.com](https://api-ninjas.com)
+2. Create free account (no credit card required)
+3. Copy your API key to `.env`:
+   ```
+   VITE_API_NINJAS_KEY=your_api_key_here
+   ```
 
-Add these secrets to your GitHub repository settings (`Settings` → `Secrets and variables` → `Actions`):
+## 📚 Workshop Structure
+
+### Progressive Learning Path
+
+| Phase | Duration | Focus | Key Skills |
+|-------|----------|-------|------------|
+| **[Phase 1](./workshop/phases/phase1-basic-dashboard.md)** | 30 min | Basic Dashboard | React components, mock data, localStorage |
+| **[Phase 2](./workshop/phases/phase2-api-integration.md)** | 45 min | API Integration | Rate limiting, error handling, real data |
+| **[Phase 3](./workshop/phases/phase3-intelligence-layer.md)** | 45 min | Intelligence Layer | Health scoring, sentiment analysis, business logic |
+| **[Phase 4](./workshop/phases/phase4-advanced-features.md)** | 60 min | Advanced Features | Real-time updates, alerts, performance optimization |
+
+### Workshop Materials
+
+- **[Workshop Guide](./workshop/README.md)** - Complete workshop navigation
+- **[Technical Overview](./workshop/overview.md)** - Architecture and setup details
+- **[API Reference](./workshop/resources/api-reference.md)** - Complete API integration guide
+- **[Troubleshooting](./workshop/resources/troubleshooting.md)** - Common issues and solutions
+
+## 🏗️ Architecture & Features
+
+### Customer Intelligence Platform
+
+**Core Widgets:**
+- **Health Score Calculator** - Multi-factor customer health assessment
+- **Market Intelligence Feed** - Automated news monitoring with sentiment analysis
+- **Geographic Insights** - Location-based business intelligence
+- **Engagement Optimizer** - Communication timing and channel recommendations
+
+**Technical Stack:**
+- **Frontend**: React 18, TypeScript, Tailwind CSS
+- **Build Tool**: Vite 6 with modern ES modules
+- **API Integration**: API Ninjas (domain, news, geographic data)
+- **State Management**: React Context with localStorage persistence
+- **Testing**: Vitest with Happy DOM
+- **Code Quality**: ESLint 9 (flat config), Prettier
+
+### Business Value Demonstration
+
+**Measurable Outcomes:**
+- 📊 **Customer Health Scoring** - Automated risk assessment
+- 📰 **Market Intelligence** - Real-time company news analysis  
+- 🌍 **Geographic Context** - Location-based business insights
+- 📞 **Engagement Optimization** - Data-driven communication strategies
+- ⚡ **Performance** - Sub-2-second load times with intelligent caching
+
+## 🎓 Document Driven Development (DDD)
+
+### Methodology Overview
+
+DDD transforms traditional development by putting **specifications first**:
+
+1. **Write detailed specifications** for each component
+2. **Generate code using AI** from these specifications
+3. **Iterate and refine** through testing and validation
+4. **Scale efficiently** with consistent patterns
+
+### Workshop Benefits
+
+**For Developers:**
+- Learn cutting-edge AI-assisted development
+- Master specification writing for better code quality
+- Experience modern React and TypeScript patterns
+- Build portfolio-worthy customer intelligence platform
+
+**For Organizations:**
+- Evaluate DDD methodology for team adoption
+- Assess AI-powered development productivity gains
+- Understand customer success platform architecture
+- Pilot advanced development workflows
+
+## 🛠️ Development Commands
 
 ```bash
-# Required: OpenRouter API key for AI functionality
-gh secret set OPENROUTER_API_KEY --body "sk-or-your-actual-key-here"
+# Development
+npm run dev              # Start development server
+npm run build            # Production build
+npm run preview          # Preview production build
 
-# Optional: GitHub Personal Access Token (only for cross-workflow triggering)
-gh secret set GH_PAT --body "your-github-token-here"
+# Code Quality
+npm run lint             # ESLint checking
+npm run lint:fix         # Auto-fix linting issues
+npm run format           # Prettier formatting
+npm run type-check       # TypeScript validation
+
+# Testing
+npm run test             # Run tests with Vitest
+npm run test:ui          # Visual test interface
+npm run test:coverage    # Coverage report
+
+# Analysis
+npm run analyze          # Bundle size analysis
 ```
 
-**Get your OpenRouter API key**: [openrouter.ai](https://openrouter.ai)
+## 📋 Component Specifications
 
-#### 3. Repository Labels
+### Detailed Technical Specs
 
-Set up the required labels for AI workflow automation:
+- **[Customer Health Widget](./workshop/specs/customer-health-widget.md)** - Health scoring algorithm and implementation
+- **[Market Intelligence Feed](./workshop/specs/market-intelligence-feed.md)** - News analysis and sentiment processing
+- **[Geographic Insights](./workshop/specs/geographic-insights.md)** - Location-based business intelligence
+- **[Engagement Optimizer](./workshop/specs/engagement-optimizer.md)** - Communication optimization algorithms
 
-```bash
-# Run the label setup script (included in your project)
-./scripts/setup-labels.sh
-```
+Each specification includes:
+- Functional requirements and acceptance criteria
+- Data sources and processing logic
+- Visual design and user experience
+- Performance requirements and optimization
+- Testing strategies and validation
 
-### GitHub Token Permissions
+## 🔧 API Integration
 
-This project's scripts and workflows use the `GITHUB_TOKEN` to interact with the GitHub API. The token's permissions are
-automatically configured in GitHub Actions environments. For local development, you may need to create a personal access
-token with the appropriate scopes.
+### API Ninjas Endpoints Used
 
-For more information on GitHub token permissions, see the official documentation:
+| Endpoint | Purpose | Dashboard Feature |
+|----------|---------|-------------------|
+| `/whois` | Domain registration info | Company stability metrics |
+| `/urllookup` | Website availability | Uptime monitoring |
+| `/news` | Company news | Market intelligence |
+| `/city` | Demographics | Location insights |
+| `/timezone` | Time zone data | Communication optimization |
+| `/holidays` | Holiday calendar | Engagement planning |
 
-- [Automatic token authentication](https://docs.github.com/en/actions/security-guides/automatic-token-authentication)
-- [Troubleshooting your authentication credentials](https://docs.github.com/en/authentication/troubleshooting-your-authentication-credentials)
-- [Authenticating as a GitHub App installation](https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/authenticating-as-a-github-app-installation)
+**Features:**
+- Rate limiting (1 req/sec for free tier)
+- Intelligent caching (15-minute TTL)
+- Graceful error handling
+- Offline mode support
 
-## 📋 How It Works
+## 🎯 Success Metrics
 
-1. **Create Issue**: Add `ai-task` label to any GitHub issue
-2. **AI Processing**: GitHub Action automatically implements the solution
-3. **Pull Request**: AI creates PR with code, tests, and documentation
-4. **Review & Merge**: Your team reviews and merges AI-generated code
+### Workshop Completion Targets
 
-### Example Workflow
+- **90%** complete Phase 1 & 2 (basic functionality)
+- **80%** complete Phase 3 (intelligence features)  
+- **60%** attempt Phase 4 (advanced features)
+- **4.5/5** average satisfaction rating
 
-```bash
-# 1. Create an issue requesting a feature
-gh issue create --title "Add user authentication" --label "ai-task"
+### Technical Achievements
 
-# 2. AI automatically:
-#    - Creates feature branch
-#    - Implements the code
-#    - Adds tests
-#    - Creates pull request
+- **< 2 seconds** initial dashboard load time
+- **> 90%** API integration success rate
+- **100%** health score calculation accuracy
+- **> 95%** performance targets met
 
-# 3. Review and merge the PR
-gh pr review --approve
-gh pr merge
-```
+## 📈 Business Impact
 
-## 🏷️ Available Labels
+### ROI Demonstration
 
-The setup creates these labels for different AI workflows:
+**Time Savings:**
+- Customer health reviews: 3 hours → 15 minutes
+- Market research: 2 hours → automated
+- Communication planning: 30 minutes → real-time
 
-- `ai-task` - General AI development tasks
-- `ai-bug-fix` - AI-assisted bug fixes
-- `ai-refactor` - Code refactoring requests
-- `ai-test` - Test generation
-- `ai-docs` - Documentation updates
-- `ai-fix-lint` - Automatic lint fixes
-- `ai-fix-security` - Security issue fixes
-- `ai-fix-tests` - Test failure fixes
+**Risk Reduction:**
+- 20% improvement in churn prediction
+- Early warning system for at-risk accounts
+- Automated competitive intelligence
 
-## 📚 Documentation
+## 🆘 Support & Resources
 
-After setup, your project includes:
+### Workshop Support
 
-- **Getting Started Guide** - Team onboarding
-- **AI Workflow Guide** - How to use AI assistance
-- **Security Guidelines** - Safe AI development practices
-- **Troubleshooting** - Common issues and solutions
+- **Real-time Help**: Instructor guidance throughout
+- **Comprehensive Docs**: Step-by-step guides for each phase  
+- **Code Examples**: Working solutions provided
+- **Troubleshooting**: Common issues documented with solutions
 
-## 🔒 Security Features
+### Additional Resources
 
-- **Automated security scanning** with Bandit and Semgrep
-- **Dependency vulnerability checks**
-- **Secret detection** and prevention
-- **AI-powered security fixes** for detected issues
-- **Cost controls** to prevent runaway API usage
-
-## 🧹 Code Quality & Security
-
-This project uses a suite of npm-based tools to ensure code quality, consistency,
-and security. The tools are configured to run in pre-commit hooks and in CI/CD workflows.
-
-### Linting & Formatting
-
-- **ESLint**: For identifying and reporting on patterns in JavaScript.
-  - `.eslintrc.js`: Base configuration.
-  - `.eslintrc.security.js`: Stricter rules for security.
-- **Prettier**: For consistent code formatting.
-- **markdownlint**: For ensuring Markdown files are well-formed.
-- **yamllint**: For validating YAML files.
-
-### Available npm scripts
-
-- `npm run lint`: Lints the codebase.
-- `npm run lint:fix`: Fixes linting errors automatically.
-- `npm run lint:cached`: Lints only changed files.
-- `npm run lint:security`: Runs a security-focused lint scan.
-- `npm run lint:all`: Runs all linting and formatting checks in parallel.
-- `npm run format`: Formats the codebase with Prettier.
-- `npm run format:check`: Checks for formatting issues.
-
-### Pre-commit Hooks
-
-The `./install.sh` script automatically sets up pre-commit hooks to run these checks
-before each commit. See `.pre-commit-config.yaml` for the full configuration.
-
-## ⚡ CLI Commands
-
-```bash
-# Create new project
-customer-intelligence <project-name>
-
-# Get help
-customer-intelligence --help
-
-# Check version
-customer-intelligence --version
-```
-
-### CLI Options
-
-```bash
-# Basic setup
-customer-intelligence my-project
-
-# Force overwrite existing directory
-customer-intelligence my-project --force
-
-# Use specific template
-customer-intelligence my-project --template enterprise
-
-# Initialize git repository
-customer-intelligence my-project --git-init
-```
-
-### Install Script Options
-
-```bash
-# Non-interactive installation
-./install.sh --auto-yes
-
-# Development installation
-./install.sh --dev
-
-# Skip specific components
-./install.sh --skip-labels --skip-claude
-```
-
-## 🆘 Support & Troubleshooting
-
-### Common Issues
-
-| Issue                    | Solution                                             |
-| ------------------------ | ---------------------------------------------------- |
-| API key not working      | Verify key at [openrouter.ai](https://openrouter.ai) |
-| Workflows not triggering | Check repository secrets are set                     |
-| AI tasks failing         | Review workflow logs in GitHub Actions               |
-| Permission errors        | Check GitHub Actions permissions                     |
-
-### Getting Help
-
-- **GitHub Issues**: [Report bugs or request features](https://github.com/stillrivercode/customer-intelligence/issues)
-- **Documentation**: Check the generated docs in your project
-- **Examples**: See working examples in the template repository
-
-## 🔄 Updates
-
-Keep your AI workflows up to date:
-
-```bash
-# Check for updates
-npm update @stillrivercode/customer-intelligence
-
-# Update your project workflows (manual sync with template)
-git fetch template
-git log --oneline template/main ^HEAD
-```
+- **Performance Guide**: [Optimization techniques](./workshop/resources/performance.md)
+- **API Documentation**: [Complete integration guide](./workshop/resources/api-reference.md)
+- **Best Practices**: Modern React and TypeScript patterns
 
 ## 📄 License
 
-MIT License - free for personal and commercial use.
+MIT License - Free for educational and commercial use.
 
-> **Note**: This project is currently in active development and not yet ready for external contributions.
-> We appreciate your interest and will update this section when we're ready to accept contributions.
+## 🤝 About Stillriver
+
+This workshop is part of the **Document Driven Development Series** by [Stillriver Software Solutions LLC](https://stillriver.io). We specialize in AI-powered development methodologies that accelerate software delivery through specification-driven code generation.
+
+**Ready to experience the future of development?**
+
+```bash
+git clone https://github.com/stillrivercode/customer-intelligence.git
+cd customer-intelligence
+npm install
+npm run dev
+```
 
 ---
 
-**Ready to supercharge your development with AI?**
-
-```bash
-npx @stillrivercode/customer-intelligence my-ai-project
-```
+**🎓 Start Your DDD Journey** - Begin with the [Workshop Guide](./workshop/README.md)
