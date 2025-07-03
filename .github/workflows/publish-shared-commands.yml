@@ -1,0 +1,109 @@
+name: Publish Shared Commands
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+    paths:
+      - 'shared-commands/**'
+  workflow_dispatch:
+
+jobs:
+  publish:
+    if: |
+      (github.event_name == 'pull_request' && github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'release')) ||
+      github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Required for commit analysis
+          token: ${{ secrets.GH_PAT }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: ./shared-commands
+
+      - name: Determine bump type
+        id: bump
+        run: |
+          BUMP_TYPE=$(npx conventional-recommended-bump -p angular)
+          echo "BUMP_TYPE=$BUMP_TYPE" >> $GITHUB_ENV
+        working-directory: ./shared-commands
+
+      - name: Calculate next version
+        id: next_version
+        run: |
+          CURRENT_VERSION=$(node -p "require('./package.json').version")
+          echo "current=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+
+          # Calculate next version based on bump type
+          case "${{ env.BUMP_TYPE }}" in
+            major)
+              NEXT_VERSION=$(npm version major --no-git-tag-version)
+              ;;
+            minor)
+              NEXT_VERSION=$(npm version minor --no-git-tag-version)
+              ;;
+            patch)
+              NEXT_VERSION=$(npm version patch --no-git-tag-version)
+              ;;
+            *)
+              echo "Unknown bump type: ${{ env.BUMP_TYPE }}"
+              exit 1
+              ;;
+          esac
+
+          # Remove 'v' prefix if present
+          NEXT_VERSION=${NEXT_VERSION#v}
+          echo "next=$NEXT_VERSION" >> $GITHUB_OUTPUT
+
+          # Reset version back to current for now
+          npm version $CURRENT_VERSION --no-git-tag-version
+        working-directory: ./shared-commands
+
+      - name: Check if version is published
+        id: check_version
+        run: |
+          if npm view @stillrivercode/shared-commands@${{ steps.next_version.outputs.next }} version 2>/dev/null; then
+            echo "published=true" >> $GITHUB_OUTPUT
+            echo "Version ${{ steps.next_version.outputs.next }} is already published"
+          else
+            echo "published=false" >> $GITHUB_OUTPUT
+            echo "Version ${{ steps.next_version.outputs.next }} is not published, proceeding with release"
+          fi
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Increment version
+        if: steps.check_version.outputs.published == 'false'
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          npm version ${{ env.BUMP_TYPE }} -m "chore(release): %s"
+        working-directory: ./shared-commands
+
+      - name: Run tests
+        if: steps.check_version.outputs.published == 'false'
+        run: npm test
+        working-directory: ./shared-commands
+
+      - name: Publish package
+        if: steps.check_version.outputs.published == 'false'
+        run: npm publish --access public
+        working-directory: ./shared-commands
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Push changes
+        if: steps.check_version.outputs.published == 'false'
+        run: git push --follow-tags

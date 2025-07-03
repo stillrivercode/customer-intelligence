@@ -1,0 +1,13 @@
+{
+  "name": "customer-intelligence",
+  "description": "AI-powered workflow automation project",
+  "owner": "stillrivercode",
+  "features": [
+    "ai-tasks",
+    "ai-pr-review",
+    "cost-monitoring",
+    "security"
+  ],
+  "template": "default",
+  "created": "2025-07-02T23:37:37.215Z"
+}
