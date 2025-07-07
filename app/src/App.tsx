@@ -1,7 +1,8 @@
+import type { FC } from 'react'
 import Dashboard from './components/Dashboard'
 import './App.css'
 
-const App: React.FC = () => {
+const App: FC = () => {
   return (
     <div className="app">
       <Dashboard />

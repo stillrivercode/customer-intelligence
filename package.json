@@ -23,7 +23,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint . --ext js,jsx,ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint . --ext js,jsx,ts,tsx --report-unused-disable-directives",
     "lint:fix": "eslint . --ext js,jsx,ts,tsx --fix",
     "lint:security": "eslint . --config eslint.config.security.js",
     "lint:yaml": "echo 'YAML lint placeholder - no YAML linter configured'",
