@@ -7,20 +7,20 @@ export default defineConfig({
   
   resolve: {
     alias: {
-      '@': resolve(__dirname, './src'),
-      '@/components': resolve(__dirname, './src/components'),
-      '@/utils': resolve(__dirname, './src/utils'),
-      '@/services': resolve(__dirname, './src/services'),
-      '@/hooks': resolve(__dirname, './src/hooks'),
-      '@/data': resolve(__dirname, './src/data'),
-      '@/types': resolve(__dirname, './src/types')
+      '@': resolve(__dirname, './app/src'),
+      '@/components': resolve(__dirname, './app/src/components'),
+      '@/utils': resolve(__dirname, './app/src/utils'),
+      '@/services': resolve(__dirname, './app/src/services'),
+      '@/hooks': resolve(__dirname, './app/src/hooks'),
+      '@/data': resolve(__dirname, './app/src/data'),
+      '@/types': resolve(__dirname, './app/src/types')
     }
   },
   
   test: {
     globals: true,
     environment: 'happy-dom',
-    setupFiles: ['./src/test/setup.ts'],
+    setupFiles: ['./app/src/test/setup.ts'],
     css: true,
     
     // Coverage configuration
@@ -30,13 +30,13 @@ export default defineConfig({
       reportsDirectory: './coverage',
       exclude: [
         'node_modules/',
-        'src/test/',
-        'src/**/*.test.{ts,tsx}',
-        'src/**/*.spec.{ts,tsx}',
+        'app/src/test/',
+        'app/src/**/*.test.{ts,tsx}',
+        'app/src/**/*.spec.{ts,tsx}',
         '**/*.config.{js,ts}',
         '**/types.ts',
-        'src/main.tsx',
-        'src/vite-env.d.ts'
+        'app/src/main.tsx',
+        'app/src/vite-env.d.ts'
       ],
       thresholds: {
         global: {
@@ -50,7 +50,7 @@ export default defineConfig({
     
     // Test file patterns
     include: [
-      'src/**/*.{test,spec}.{js,ts,jsx,tsx}'
+      'app/src/**/*.{test,spec}.{js,ts,jsx,tsx}'
     ],
     
     // Watch options
