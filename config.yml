@@ -1,0 +1,7 @@
+rules:
+  - id: hardcoded-secrets
+    pattern: |
+      $KEY = "$VALUE"
+    message: Potential hardcoded secret
+    severity: ERROR
+    languages: [python, javascript]
