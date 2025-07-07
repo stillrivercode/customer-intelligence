@@ -317,10 +317,14 @@ This project uses pre-commit hooks to ensure code quality. **All commits must pa
 - **Pre-commit**: Version 2.15.0+ (recommended: latest)
 - **Python**: 3.8+ (for hook execution)
 - **Git**: Any recent version (2.10+)
+- **Node.js**: 18+ (for React app hooks)
 
 ```bash
 # Install pre-commit (if not already installed)
 pip install pre-commit>=2.15.0
+
+# Install React app dependencies
+cd app && npm install && cd ..
 
 # Install pre-commit hooks
 pre-commit install
@@ -337,7 +341,19 @@ pre-commit --version
 
 # Check if hooks are installed
 ls -la .git/hooks/pre-commit
+
+# Test React app hooks specifically
+pre-commit run react-app-tests --all-files
 ```
+
+#### React Application Hooks
+
+The pre-commit configuration includes specific hooks for the React application:
+
+- **react-app-tests**: Runs `npm test -- --run` for React component changes
+- **react-app-build**: Validates production build succeeds for React code changes
+- **react-app-lint**: Runs ESLint on React application files
+- **react-npm-lock-check**: Ensures React app package-lock.json consistency
 
 #### Claude Code Workflow
 

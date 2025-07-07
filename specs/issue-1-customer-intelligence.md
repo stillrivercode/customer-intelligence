@@ -95,8 +95,8 @@ graph TD
 - Manage global application state (future)
 
 **Interfaces**:
-- No props (root component)
-- Renders Dashboard component
+- No props required (root component)
+- Returns JSX element containing Dashboard component
 
 #### Component 2: Dashboard Component
 
@@ -115,9 +115,7 @@ graph TD
 
 ```typescript
 // App.tsx
-interface AppProps {}
-
-const App: React.FC<AppProps> = () => {
+const App: React.FC = () => {
   return (
     <div className="app">
       <Dashboard />
@@ -209,6 +207,15 @@ interface DashboardProps {
 - **Coverage Target**: 80%+
 - **Test Categories**: Component rendering, props handling
 
+### Pre-commit Testing
+
+The project includes comprehensive pre-commit hooks that automatically run React application tests:
+
+- **React App Tests**: Runs `npm test -- --run` for all React component changes
+- **React App Build**: Validates production build for React code changes  
+- **React App Lint**: Runs ESLint on React application files
+- **Package Lock Validation**: Ensures package-lock.json consistency
+
 ### Testing Examples
 
 ```typescript
@@ -218,7 +225,7 @@ import Dashboard from './Dashboard';
 
 test('renders dashboard title', () => {
   render(<Dashboard />);
-  const element = screen.getByText(/customer intelligence dashboard/i);
+  const element = screen.getByRole('heading', { name: /customer intelligence dashboard/i });
   expect(element).toBeInTheDocument();
 });
 
@@ -228,6 +235,14 @@ test('renders custom title', () => {
   expect(element).toBeInTheDocument();
 });
 ```
+
+### Automated Quality Assurance
+
+Pre-commit hooks ensure code quality by automatically running:
+1. **Tests**: All React component tests must pass before commit
+2. **Build**: Production build must succeed for code changes
+3. **Linting**: Code must pass ESLint rules  
+4. **Dependencies**: Package lock files must be synchronized
 
 ## Deployment Plan
 

@@ -1,9 +1,7 @@
 import Dashboard from './components/Dashboard'
 import './App.css'
 
-interface AppProps {}
-
-const App: React.FC<AppProps> = () => {
+const App: React.FC = () => {
   return (
     <div className="app">
       <Dashboard />

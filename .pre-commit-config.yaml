@@ -70,6 +70,34 @@ repos:
         stages: [manual]
         additional_dependencies: [eslint@^8.0.0, eslint-plugin-security@^1.7.1]
 
+  # React Application Tests
+  # Runs tests for the React application in app/ directory
+  - repo: local
+    hooks:
+      - id: react-app-tests
+        name: React App Tests
+        entry: |
+          bash -c 'cd app && echo "Running React application tests..." && npm test -- --run'
+        language: system
+        files: ^app/.*\.(js|ts|jsx|tsx)$
+        pass_filenames: false
+
+      - id: react-app-build
+        name: React App Build Check
+        entry: |
+          bash -c 'cd app && echo "Checking React application build..." && npm run build'
+        language: system
+        files: ^app/.*\.(js|ts|jsx|tsx|json)$
+        pass_filenames: false
+
+      - id: react-app-lint
+        name: React App Lint
+        entry: |
+          bash -c 'cd app && echo "Linting React application..." && npm run lint'
+        language: system
+        files: ^app/.*\.(js|ts|jsx|tsx)$
+        pass_filenames: false
+
   # NPM package-lock.json validation
   # Ensures package-lock.json is up to date when package.json changes
   - repo: local
@@ -80,4 +108,12 @@ repos:
           bash -c 'echo "Checking package-lock.json consistency..."; npm install --package-lock-only; if ! git diff --quiet --exit-code package-lock.json; then echo "Error: package-lock.json is out of sync with package.json."; echo "Please run npm install, then git add package-lock.json, and re-commit."; exit 1; fi'
         language: system
         files: package\.json$
+        pass_filenames: false
+
+      - id: react-npm-lock-check
+        name: React App NPM Lock File Check
+        entry: |
+          bash -c 'cd app && echo "Checking React app package-lock.json consistency..."; npm install --package-lock-only; if ! git diff --quiet --exit-code package-lock.json; then echo "Error: app/package-lock.json is out of sync with app/package.json."; echo "Please run cd app && npm install, then git add app/package-lock.json, and re-commit."; exit 1; fi'
+        language: system
+        files: ^app/package\.json$
         pass_filenames: false
