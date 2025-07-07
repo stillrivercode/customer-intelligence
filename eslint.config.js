@@ -17,7 +17,18 @@ export default [
       'coverage/**',
       '*.config.js',
       '*.config.ts',
-      '.eslintrc*.js'
+      '.eslintrc*.js',
+      'app/dist/**',
+      'app/node_modules/**',
+      'cli/tests/**',
+      '.temp/**',
+      'temp/**',
+      '**/fixtures/**',
+      'scripts/**',
+      'eslint.config.security.js',
+      'cli/create-project.js',
+      'cli/validators.js',
+      'shared-commands/index.js'
     ]
   },
   
@@ -128,13 +139,34 @@ export default [
       
       // TypeScript specific
       '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/prefer-nullish-coalescing': 'warn',
-      '@typescript-eslint/prefer-optional-chain': 'warn',
       '@typescript-eslint/no-non-null-assertion': 'warn',
       '@typescript-eslint/consistent-type-imports': [
         'warn',
         { prefer: 'type-imports' }
       ]
+    }
+  },
+
+  // Node.js CommonJS files configuration
+  {
+    files: ['cli/**/*.js', 'shared-commands/**/*.js'],
+    languageOptions: {
+      ecmaVersion: 2024,
+      sourceType: 'commonjs',
+      globals: {
+        ...globals.node,
+        require: 'readonly',
+        module: 'readonly',
+        __dirname: 'readonly',
+        __filename: 'readonly',
+        process: 'readonly'
+      }
+    },
+    rules: {
+      'no-console': 'off',
+      'no-undef': 'error',
+      'no-unused-vars': 'warn',
+      'security/detect-non-literal-fs-filename': 'off'
     }
   },
   
