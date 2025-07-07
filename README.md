@@ -29,8 +29,8 @@ This project serves as the primary example for Stillriver Software Solutions' **
 git clone https://github.com/stillrivercode/customer-intelligence.git
 cd customer-intelligence
 
-# Install dependencies
-npm install
+# Run automated setup (installs dependencies, sets up workflows)
+./install.sh
 
 # Set up environment
 cp .env.example .env
@@ -234,7 +234,7 @@ This workshop is part of the **Document Driven Development Series** by [Stillriv
 ```bash
 git clone https://github.com/stillrivercode/customer-intelligence.git
 cd customer-intelligence
-npm install
+./install.sh
 npm run dev
 ```
 
