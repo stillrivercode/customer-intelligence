@@ -147,6 +147,23 @@ const Dashboard: React.FC<DashboardProps> = ({
 
 ## API Specifications
 
+### External API Integration
+
+#### Stillriver API Service
+
+**Base URL**: `https://api.stillriver.info`
+
+**Authentication**: No API key required (public proxy service)
+
+**Available Endpoints** (via API Ninjas proxy):
+- **Finance**: Bitcoin, Currency, Stocks, Exchange Rate, Commodity Price (100 req/hour)
+- **Internet**: DNS Lookup, IP Lookup, WHOIS, Domain Availability (500 req/hour)
+- **Entertainment**: Company News, Facts, Trivia (1000 req/hour)
+- **Places**: City data, Timezone, Geographic information (1000 req/hour)
+
+**Rate Limiting**: Category-specific limits (50-1000 requests/hour)
+**Caching**: Intelligent caching with TTL based on data volatility
+
 ### Component Props API
 
 #### Dashboard Component
@@ -179,7 +196,9 @@ interface DashboardProps {
 
 ### Development Security
 
-- **Environment Variables**: No sensitive data in client-side code
+- **Public API Access**: No API keys required for Stillriver proxy service
+- **Rate Limiting**: Built-in rate limiting and caching through Stillriver proxy
+- **CORS Handling**: Proxy service handles cross-origin requests
 - **Build Security**: Vite handles secure bundling
 - **Development Server**: HTTPS in development (future enhancement)
 
