@@ -19,7 +19,6 @@ This project serves as the primary example for Stillriver Software Solutions' **
 
 ### Prerequisites
 - Node.js 18+ 
-- API Ninjas account (free tier available)
 - Basic React/TypeScript knowledge
 
 ### Installation
@@ -32,21 +31,14 @@ cd customer-intelligence
 # Run automated setup (installs dependencies, sets up workflows)
 ./install.sh
 
-# Set up environment
-cp .env.example .env
-# Edit .env with your API Ninjas key
+# No environment setup needed for basic functionality
 
 # Start development server
 npm run dev
 ```
 
-### Get Your API Key
-1. Visit [api-ninjas.com](https://api-ninjas.com)
-2. Create free account (no credit card required)
-3. Copy your API key to `.env`:
-   ```
-   VITE_API_NINJAS_KEY=your_api_key_here
-   ```
+### No API Key Required
+The Stillriver API is a public proxy service - no API key or registration needed. Just start the development server and begin building!
 
 ## 📚 Workshop Structure
 
@@ -79,7 +71,7 @@ npm run dev
 **Technical Stack:**
 - **Frontend**: React 18, TypeScript, Tailwind CSS
 - **Build Tool**: Vite 6 with modern ES modules
-- **API Integration**: API Ninjas (domain, news, geographic data)
+- **API Integration**: Stillriver API (proxy for domain, news, geographic data)
 - **State Management**: React Context with localStorage persistence
 - **Testing**: Vitest with Happy DOM
 - **Code Quality**: ESLint 9 (flat config), Prettier
@@ -159,7 +151,7 @@ Each specification includes:
 
 ## 🔧 API Integration
 
-### API Ninjas Endpoints Used
+### Stillriver API Endpoints Used
 
 | Endpoint | Purpose | Dashboard Feature |
 |----------|---------|-------------------|
@@ -171,8 +163,9 @@ Each specification includes:
 | `/holidays` | Holiday calendar | Engagement planning |
 
 **Features:**
-- Rate limiting (1 req/sec for free tier)
-- Intelligent caching (15-minute TTL)
+- Rate limiting (varies by endpoint: 100-1000 req/hour)
+- Intelligent caching with dynamic TTL
+- Built-in proxy layer for reliability
 - Graceful error handling
 - Offline mode support
 
@@ -191,6 +184,15 @@ Each specification includes:
 - **> 90%** API integration success rate
 - **100%** health score calculation accuracy
 - **> 95%** performance targets met
+
+## 🔄 Recent Changes
+
+### v2.0 Migration Note
+- **CLI Tools Removed**: This version focuses on the React application workshop experience
+- **API Simplified**: Switched to Stillriver API - no API keys needed for workshop simplicity
+- **Setup Streamlined**: Run `./install.sh` and `npm run dev` to get started immediately
+
+For workshop participants: The setup is now even easier with zero configuration required!
 
 ## 📈 Business Impact
 
