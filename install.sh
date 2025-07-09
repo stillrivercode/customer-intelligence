@@ -17,7 +17,6 @@ NC='\033[0m' # No Color
 INSTALL_DEV=false
 SKIP_LABELS=false
 AUTO_YES=false
-OPENROUTER_KEY=""
 REPO_NAME=""
 
 # Parse command line arguments
@@ -35,24 +34,15 @@ while [[ $# -gt 0 ]]; do
             AUTO_YES=true
             shift
             ;;
-        --openrouter-key)
-            OPENROUTER_KEY="$2"
-            shift 2
-            ;;
         -h|--help)
             echo "Usage: $0 [OPTIONS]"
             echo "Options:"
             echo "  --dev               Install development dependencies"
             echo "  --skip-labels       Skip GitHub labels setup"
             echo "  --auto-yes          Automatically answer yes to prompts (non-interactive)"
-            echo "  --openrouter-key KEY Set OpenRouter API key automatically"
             echo "  -h, --help          Show this help message"
             echo ""
-            echo "Environment Variables (more secure than command-line):"
-            echo "  OPENROUTER_API_KEY  OpenRouter API key (alternative to --openrouter-key)"
-            echo ""
             echo "Example:"
-            echo "  export OPENROUTER_API_KEY=sk-..."
             echo "  ./install.sh --auto-yes"
             exit 0
             ;;
@@ -282,12 +272,7 @@ setup_openrouter_api() {
     echo "• Direct API integration"
     echo ""
 
-    if [[ -n "$OPENROUTER_KEY" ]]; then
-        log_info "OpenRouter API key provided via command line"
-        echo "Remember to add this key as a repository secret: OPENROUTER_API_KEY"
-    else
-        log_info "OpenRouter API key not provided - you'll need to set it as a repository secret"
-    fi
+    log_info "You'll need to set the OpenRouter API key as a repository secret"
 }
 
 setup_github_labels() {
@@ -425,75 +410,63 @@ setup_template_upstream() {
     fi
 }
 
-setup_github_secrets() {
-    log_info "Setting up GitHub repository secrets..."
+show_manual_setup_instructions() {
+    echo ""
+    echo "Manual setup instructions:"
+    echo "1. Get OpenRouter API key: https://openrouter.ai"
+    echo "2. Set secret via GitHub web interface:"
+    echo "   - Go to Settings > Secrets and variables > Actions"
+    echo "   - Click 'New repository secret'"
+    echo "   - Name: OPENROUTER_API_KEY"
+    echo "   - Value: Your OpenRouter API key"
+    echo "3. Or use GitHub CLI (if available):"
+    echo "   gh secret set OPENROUTER_API_KEY"
+    echo ""
+}
+
+check_github_secrets() {
+    log_info "Checking GitHub secrets configuration..."
 
     if ! check_command gh; then
-        log_warning "GitHub CLI not found, cannot set secrets"
+        log_warning "GitHub CLI not found, cannot check secrets"
+        log_info "You'll need to manually set up secrets in GitHub Settings > Secrets and variables > Actions"
+        show_manual_setup_instructions
         return 0
     fi
 
     if ! git remote get-url origin >/dev/null 2>&1; then
-        log_warning "No Git remote found, skipping secrets setup"
+        log_warning "No Git remote found, skipping secrets check"
+        show_manual_setup_instructions
         return 0
     fi
 
-    # Check environment variables if not provided via command line
-    if [[ -z "$OPENROUTER_KEY" && -n "${OPENROUTER_API_KEY:-}" ]]; then
-        log_info "Using OPENROUTER_API_KEY from environment"
-        OPENROUTER_KEY="$OPENROUTER_API_KEY"
+    # Check if gh is authenticated and has access
+    if ! gh auth status >/dev/null 2>&1; then
+        log_warning "GitHub CLI not authenticated"
+        log_info "Run 'gh auth login' to authenticate, then rerun this script"
+        show_manual_setup_instructions
+        return 0
     fi
 
-    # Set secrets if provided via parameters
-    local secrets_set=false
-
-    if [[ -n "$OPENROUTER_KEY" ]]; then
-        log_info "Setting OPENROUTER_API_KEY from parameter..."
-        # Basic validation for OpenRouter API key format
-        if [[ ! "$OPENROUTER_KEY" =~ ^sk-[A-Za-z0-9_-]{32,}$ ]]; then
-            log_warning "API key format may be invalid. OpenRouter keys typically start with 'sk-'"
-        fi
-        if echo "$OPENROUTER_KEY" | gh secret set OPENROUTER_API_KEY; then
-            log_success "OPENROUTER_API_KEY secret set"
-            secrets_set=true
-        else
-            log_error "Failed to set OPENROUTER_API_KEY secret"
-        fi
-    fi
-
-    # Check existing secrets
+    # Check existing secrets with error handling
     local secrets_missing=false
+    local secrets_output
 
-    if gh secret list | grep -q "OPENROUTER_API_KEY"; then
+    if secrets_output=$(gh secret list 2>/dev/null) && echo "$secrets_output" | grep -q "OPENROUTER_API_KEY"; then
         log_success "OPENROUTER_API_KEY secret found"
     else
-        log_warning "OPENROUTER_API_KEY secret not found"
+        if [[ -z "$secrets_output" ]]; then
+            log_warning "Unable to check secrets (permission denied or repository access issue)"
+        else
+            log_warning "OPENROUTER_API_KEY secret not found"
+        fi
         secrets_missing=true
     fi
 
-    # Offer to set secrets interactively if missing and not provided
-    if [[ "$secrets_missing" == true && "$secrets_set" == false ]]; then
-        echo ""
-        if prompt_user "Would you like to set up GitHub secrets now?"; then
-            if [[ -z "$OPENROUTER_KEY" ]] && ! gh secret list | grep -q "OPENROUTER_API_KEY"; then
-                echo "Enter your OpenRouter API key (get one at https://openrouter.ai):"
-                read -r -s openrouter_key
-                if [[ -n "$openrouter_key" ]]; then
-                    if echo "$openrouter_key" | gh secret set OPENROUTER_API_KEY; then
-                        log_success "OPENROUTER_API_KEY secret set"
-                    else
-                        log_error "Failed to set OPENROUTER_API_KEY secret"
-                    fi
-                fi
-            fi
-        else
-            echo ""
-            echo "Manual setup instructions:"
-            echo "1. Get OpenRouter API key: https://openrouter.ai"
-            echo "2. Set secret:"
-            echo "   gh secret set OPENROUTER_API_KEY"
-            echo "3. Or via GitHub web interface: Settings > Secrets and variables > Actions"
-            echo ""
+    # Provide manual setup instructions if secrets are missing
+    if [[ "$secrets_missing" == true ]]; then
+        if prompt_user "Would you like to see manual setup instructions?"; then
+            show_manual_setup_instructions
         fi
     fi
 }
@@ -560,10 +533,7 @@ print_next_steps() {
     echo "- Update scripts: ./dev-scripts/update-from-template.sh"
     echo ""
     echo "Non-interactive installation:"
-    echo "- ./install.sh --auto-yes --openrouter-key YOUR_KEY"
-    echo "- Or more securely with environment variables:"
-    echo "  export OPENROUTER_API_KEY=sk-..."
-    echo "  ./install.sh --auto-yes"
+    echo "- ./install.sh --auto-yes"
     echo ""
 }
 
@@ -571,13 +541,6 @@ main() {
     echo -e "${BLUE}🤖 Agentic Workflow Template Installer${NC}"
     echo "Setting up AI-powered development workflow automation..."
     echo ""
-
-    # Security warning for command-line secrets
-    if [[ -n "$OPENROUTER_KEY" ]]; then
-        log_warning "Passing secrets via command line may expose them in shell history"
-        log_info "Consider using environment variables instead: export OPENROUTER_API_KEY=..."
-        echo ""
-    fi
 
     # Prerequisites check
     log_info "Checking prerequisites..."
@@ -609,7 +572,7 @@ main() {
     setup_github_labels
     setup_shared_commands
     setup_template_upstream
-    setup_github_secrets
+    check_github_secrets
     verify_installation
     print_next_steps
 }
