@@ -261,8 +261,10 @@ graph TD
   2. **Commit Analysis**: Parses conventional commits since last release
   3. **PR Analysis**: Maps pull requests to commits and extracts metadata
   4. **Version Calculation**: Determines semantic version based on commit types
-  5. **Version Update**: Automatically updates package.json with calculated version
-  6. **Notes Generation**: Creates categorized release notes (Features, Bug Fixes, Breaking Changes, etc.)
+  5. **Version Update**: Automatically updates package.json with calculated
+     version
+  6. **Notes Generation**: Creates categorized release notes (Features, Bug Fixes,
+     Breaking Changes, etc.)
   7. **AI Enhancement**: Optional AI-powered description improvements (cost-controlled)
   8. **Release Creation**: Publishes GitHub release with generated notes
   9. **NPM Publishing**: Optional publishing to npm registry (requires NPM_TOKEN secret)
@@ -447,7 +449,8 @@ The AI Fix Lint workflow has been significantly improved with a two-stage approa
   - 30-minute maximum runtime for all AI workflows
   - 5-minute timeout for CLI installation
   - 15-20 minute timeouts for AI operations
-  - Note: ai-orchestrator.yml uses direct timeout values (e.g., `timeout-minutes: 30`) instead of `fromJSON` to avoid
+  - Note: ai-orchestrator.yml uses direct timeout values (e.g.,
+    `timeout-minutes: 30`) instead of `fromJSON` to avoid
     GitHub workflow validation cache issues
 - **Permission Restrictions**:
   - Minimal required permissions declared explicitly

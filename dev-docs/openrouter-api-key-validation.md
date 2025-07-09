@@ -4,7 +4,8 @@ This document describes the validation process for OpenRouter API keys used in t
 
 ## Overview
 
-The system validates OpenRouter API keys to ensure proper format, authentication, and functionality before executing
+The system validates OpenRouter API keys to ensure proper format, authentication, and
+functionality before executing
 AI tasks. This prevents failures during workflow execution and provides clear error messages for troubleshooting.
 
 ## API Key Format
