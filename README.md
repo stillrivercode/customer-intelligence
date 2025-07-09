@@ -185,6 +185,15 @@ Each specification includes:
 - **100%** health score calculation accuracy
 - **> 95%** performance targets met
 
+## 🔄 Recent Changes
+
+### v2.0 Migration Note
+- **CLI Tools Removed**: This version focuses on the React application workshop experience
+- **API Simplified**: Switched to Stillriver API - no API keys needed for workshop simplicity
+- **Setup Streamlined**: Run `./install.sh` and `npm run dev` to get started immediately
+
+For workshop participants: The setup is now even easier with zero configuration required!
+
 ## 📈 Business Impact
 
 ### ROI Demonstration
