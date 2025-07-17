@@ -2,33 +2,39 @@
 
 You are working with an AI-powered development workflow template.
 
+## Shared AI Instructions
+
+For common AI assistant guidance, see [docs/AI.md](docs/AI.md) which provides shared context and the Information Dense Keywords Dictionary vocabulary.
+
 ## Key Concepts
 
 - **AI Tasks**: Issues labeled 'ai-task' trigger automated implementation
 - **OpenRouter**: All AI operations use OpenRouter API (not direct CLI)
 - **Shared Commands**: You share common commands with Claude and other agents
 
-## Common Commands
+## IDK Commands
 
-- `create-user-story-issue.sh --title "TITLE"` - Create GitHub issue and user story
-- `create-spec-issue.sh --title "TITLE"` - Create GitHub issue and technical spec
-- `create-epic.sh --title "TITLE"` - Create a new epic issue
-- `analyze-issue.sh --issue NUMBER` - Analyze existing issue requirements
+Use Information Dense Keywords Dictionary vocabulary for consistent commands:
+
+- `CREATE github issue WITH template user-story FOR "TITLE"` - Create GitHub issue and user story
+- `CREATE github issue WITH template spec FOR "TITLE"` - Create GitHub issue and technical spec
+- `CREATE github issue WITH template epic FOR "TITLE"` - Create a new epic issue
+- `analyze this github issue NUMBER` - Analyze existing issue requirements
 
 ### Example Usage
 
-```bash
+```
 # Create a new user story
-create-user-story-issue.sh --title "Implement user login functionality"
+CREATE github issue WITH template user-story FOR "Implement user login functionality"
 
 # Create a new spec
-create-spec-issue.sh --title "Technical specification for user login"
+CREATE github issue WITH template spec FOR "Technical specification for user login"
 
 # Create a new epic
-create-epic.sh --title "User authentication feature"
+CREATE github issue WITH template epic FOR "User authentication feature"
 
 # Analyze existing issue
-analyze-issue.sh --issue 123
+analyze this github issue 123
 ```
 
 - Standard git operations and file management

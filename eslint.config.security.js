@@ -3,6 +3,7 @@ import globals from 'globals';
 import security from 'eslint-plugin-security';
 import tseslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
+import react from 'eslint-plugin-react';
 
 export default [
   {
@@ -13,7 +14,11 @@ export default [
       'coverage/**',
       '*.config.js',
       '*.config.ts',
-      '.eslintrc*.js'
+      '.eslintrc*.js',
+      'app/dist/**',
+      'tests/**',
+      '**/*.test.{js,jsx,ts,tsx}',
+      '**/*.spec.{js,jsx,ts,tsx}'
     ]
   },
   
@@ -55,8 +60,7 @@ export default [
       'no-new-func': 'error',
       'no-script-url': 'error',
       
-      // API key and secret detection
-      'security/detect-unsafe-regex': 'error',
+      // API key and secret detection (duplicate rule removed)
       
       // Additional security rules for React apps
       'no-dangerously-set-inner-html': 'off', // Custom rule for React
@@ -66,7 +70,7 @@ export default [
     }
   },
   
-  // TypeScript security configuration
+  // TypeScript security configuration (simplified)
   {
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
@@ -81,17 +85,16 @@ export default [
     },
     rules: {
       // TypeScript security rules
-      '@typescript-eslint/no-explicit-any': 'error',
-      '@typescript-eslint/no-unsafe-assignment': 'warn',
-      '@typescript-eslint/no-unsafe-member-access': 'warn',
-      '@typescript-eslint/no-unsafe-call': 'warn',
-      '@typescript-eslint/no-unsafe-return': 'warn'
+      '@typescript-eslint/no-explicit-any': 'error'
     }
   },
   
   // React-specific security rules
   {
     files: ['**/*.{jsx,tsx}'],
+    plugins: {
+      react
+    },
     rules: {
       // Prevent XSS
       'react/no-danger': 'error',

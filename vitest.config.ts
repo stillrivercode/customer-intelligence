@@ -20,7 +20,7 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'happy-dom',
-    setupFiles: ['./app/src/test/setup.ts'],
+    setupFiles: ['./app/src/test/setup.ts', './tests/setup.js'],
     css: true,
     
     // Coverage configuration
@@ -50,7 +50,8 @@ export default defineConfig({
     
     // Test file patterns
     include: [
-      'app/src/**/*.{test,spec}.{js,ts,jsx,tsx}'
+      'app/src/**/*.{test,spec}.{js,ts,jsx,tsx}',
+      'tests/**/*.{test,spec}.{js,ts,jsx,tsx}'
     ],
     
     // Watch options

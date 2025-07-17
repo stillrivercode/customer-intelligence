@@ -2,6 +2,10 @@
 
 This file provides guidance to Claude Code when working with AI-powered development workflows in your repository.
 
+## Shared AI Instructions
+
+For common AI assistant guidance, see [docs/AI.md](docs/AI.md) which provides shared context and the Information Dense Keywords Dictionary vocabulary.
+
 ## Overview
 
 You are working in a repository that uses AI-powered development workflows. This enables automated coding assistance
@@ -466,85 +470,80 @@ SKIP=bandit pre-commit run --all-files
 - `@README-dev.md` is for template related development
 - `@README.md` is for those using the template
 
-## Shared Commands for AI Assistants
+## Information Dense Keywords Dictionary
 
-This project includes a shared commands directory (`shared-commands/`) that provides consistent
-functionality across different AI assistants (Claude, Gemini, etc.).
+This project uses the Information Dense Keywords Dictionary (IDK) for consistent AI assistant commands.
 
-### Available Shared Commands
+### Available IDK Commands
 
-#### create-user-story --title "TITLE" [OPTIONS]
+#### CREATE github issue WITH template user-story
 
 Creates a GitHub issue and comprehensive user story document in a unified workflow.
 
 Usage:
-
-```bash
-./shared-commands/commands/create-user-story-issue.sh --title "Add user authentication"
-./shared-commands/commands/create-user-story-issue.sh --title "Fix login bug" --body "Users cannot log in" --labels "bug,frontend" --ai-task
+```
+CREATE github issue WITH template user-story FOR "Add user authentication"
+CREATE github issue WITH template user-story FOR "Fix login bug" WITH labels "bug,frontend" AND ai-task
 ```
 
 This command:
-
 1. Creates GitHub issue with appropriate labels
 2. Generates comprehensive user story in `user-stories/issue-NUMBER-title.md`
 3. Includes acceptance criteria, test scenarios, and technical requirements
 4. Provides cross-references to related documentation
-5. Supports AI workflow integration with `--ai-task` flag
+5. Supports AI workflow integration with ai-task flag
 
-#### create-spec --title "TITLE" [OPTIONS]
+#### CREATE github issue WITH template spec
 
 Creates a GitHub issue and detailed technical specification document in a unified workflow.
 
 Usage:
-
-```bash
-./shared-commands/commands/create-spec-issue.sh --title "User Authentication Architecture"
-./shared-commands/commands/create-spec-issue.sh --title "API Design" --user-story-issue 25 --labels "backend,api"
+```
+CREATE github issue WITH template spec FOR "User Authentication Architecture"
+CREATE github issue WITH template spec FOR "API Design" LINKED TO user-story-issue 25 WITH labels "backend,api"
 ```
 
 This command:
-
 1. Creates GitHub issue for technical specification
 2. Generates detailed technical spec in `specs/issue-NUMBER-title.md`
 3. Includes architecture diagrams, API specifications, and implementation details
-4. Links to related user stories using `--user-story-issue` parameter
+4. Links to related user stories using LINKED TO parameter
 5. Adds cross-reference comments to linked issues
 
-#### analyze-issue --issue NUMBER [OPTIONS]
+#### analyze this github issue
 
 Analyzes existing GitHub issue for requirements, scope, and implementation considerations.
 
 Usage:
-
-```bash
-./shared-commands/commands/analyze-issue.sh --issue 25
-./shared-commands/commands/analyze-issue.sh --issue 100 --generate-docs
+```
+analyze this github issue 25
+analyze this github issue 100 AND generate-docs
 ```
 
 This command:
-
 1. Fetches and analyzes existing issue content
 2. Extracts requirements and assesses complexity
 3. Provides implementation recommendations
 4. Identifies dependencies and potential challenges
-5. Optionally generates missing documentation with `--generate-docs`
+5. Optionally generates missing documentation with generate-docs flag
 
-### Shared Command Structure
+### IDK Command Structure
 
-```text
-shared-commands/
-├── commands/           # Command implementations
-├── lib/               # Shared utilities
-└── templates/         # Document templates
-```
+The IDK dictionary is organized into categories:
+- **Core Commands**: CREATE, DELETE, FIX, SELECT
+- **Git Operations**: gh, commit, push, pr, comment
+- **Development**: analyze this, debug this, optimize this
+- **Documentation**: document this, explain this, research this
+- **Quality Assurance**: review this, test this
+- **Workflow**: plan this, roadmap, spec this
 
-### Benefits of Shared Commands
+### Benefits of IDK
 
-- **Consistency**: Same commands work across all AI assistants
-- **Maintainability**: Single source of truth for command logic
-- **Extensibility**: Easy to add new shared commands
-- **Cross-AI Compatibility**: Claude, Gemini, and other AI assistants can use the same tools
+- **Consistency**: Same vocabulary across all AI assistants
+- **Maintainability**: Single source of truth for command definitions
+- **Extensibility**: Easy to add new commands to the dictionary
+- **Cross-AI Compatibility**: Claude, Gemini, and other AI assistants use the same vocabulary
+- **Zero Installation**: Uses npx for immediate availability
 
 ## Development Best Practices
 
