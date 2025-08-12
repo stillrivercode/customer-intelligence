@@ -470,80 +470,126 @@ SKIP=bandit pre-commit run --all-files
 - `@README-dev.md` is for template related development
 - `@README.md` is for those using the template
 
-## Information Dense Keywords Dictionary
+## Information Dense Keywords Dictionary (IDK)
 
-This project uses the Information Dense Keywords Dictionary (IDK) for consistent AI assistant commands.
+This project uses the Information Dense Keywords Dictionary - a standardized vocabulary system for AI assistants to execute development tasks consistently.
 
-### Available IDK Commands
+### Installation & Updates
 
-#### CREATE github issue WITH template user-story
+```bash
+# Install or update IDK dictionary (recommended before starting work)
+npx @stillrivercode/information-dense-keywords
 
-Creates a GitHub issue and comprehensive user story document in a unified workflow.
-
-Usage:
-```
-CREATE github issue WITH template user-story FOR "Add user authentication"
-CREATE github issue WITH template user-story FOR "Fix login bug" WITH labels "bug,frontend" AND ai-task
+# The dictionary is installed to docs/dictionary/
 ```
 
-This command:
-1. Creates GitHub issue with appropriate labels
-2. Generates comprehensive user story in `user-stories/issue-NUMBER-title.md`
-3. Includes acceptance criteria, test scenarios, and technical requirements
-4. Provides cross-references to related documentation
-5. Supports AI workflow integration with ai-task flag
+### Quick Reference
 
-#### CREATE github issue WITH template spec
+The IDK system provides a structured command syntax for common development tasks. Full documentation is available in `docs/dictionary/` after installation.
 
-Creates a GitHub issue and detailed technical specification document in a unified workflow.
+#### Core Command Categories
 
-Usage:
+1. **Core Operations** (`docs/dictionary/core/`)
+   - `CREATE` - Generate new resources
+   - `DELETE` - Remove existing resources  
+   - `FIX` - Repair or correct issues
+   - `SELECT` - Query and retrieve information
+
+2. **Git & GitHub** (`docs/dictionary/git/`)
+   - `gh` - GitHub CLI operations
+   - `commit` - Intelligent commit message generation
+   - `push` - Smart push with checks
+   - `pr` - Pull request management
+   - `comment` - PR/issue commenting
+
+3. **Development** (`docs/dictionary/development/`)
+   - `analyze this` - Code analysis and architecture review
+   - `debug this` - Systematic debugging approach
+   - `optimize this` - Performance optimization
+   - `migrate` - Code migration and upgrades
+
+4. **Documentation** (`docs/dictionary/documentation/`)
+   - `document this` - Generate comprehensive documentation
+   - `explain this` - Create explanations for complex code
+   - `research this` - Research and gather information
+
+5. **Quality Assurance** (`docs/dictionary/quality-assurance/`)
+   - `review this` - Code review and feedback
+   - `test this` - Test generation and validation
+
+6. **Workflow** (`docs/dictionary/workflow/`)
+   - `plan this` - Project planning and task breakdown
+   - `roadmap` - Create development roadmaps
+   - `spec this` - Generate technical specifications
+
+### Example Commands
+
+```bash
+# Create a new feature with full documentation
+CREATE feature "user authentication" WITH tests AND documentation
+
+# Analyze and optimize existing code
+analyze this module "src/api/handlers" FOR performance
+optimize this function "processData" WITH benchmark
+
+# Generate comprehensive test suite
+test this component "UserProfile" WITH edge-cases AND mocks
+
+# Create a development roadmap
+roadmap FOR "Q1 2024 features" WITH milestones AND dependencies
 ```
-CREATE github issue WITH template spec FOR "User Authentication Architecture"
-CREATE github issue WITH template spec FOR "API Design" LINKED TO user-story-issue 25 WITH labels "backend,api"
-```
 
-This command:
-1. Creates GitHub issue for technical specification
-2. Generates detailed technical spec in `specs/issue-NUMBER-title.md`
-3. Includes architecture diagrams, API specifications, and implementation details
-4. Links to related user stories using LINKED TO parameter
-5. Adds cross-reference comments to linked issues
+### IDK Integration Features
 
-#### analyze this github issue
+- **Contextual Awareness**: Commands understand project structure and conventions
+- **Cross-Reference Support**: Automatic linking between related documents
+- **Template-Based Generation**: Consistent output formats
+- **Progressive Enhancement**: Commands can be chained and combined
+- **Version Control Integration**: Git-aware operations
 
-Analyzes existing GitHub issue for requirements, scope, and implementation considerations.
+### Working with IDK
 
-Usage:
-```
-analyze this github issue 25
-analyze this github issue 100 AND generate-docs
-```
+1. **Always install/update IDK** at the start of a session:
+   ```bash
+   npx @stillrivercode/information-dense-keywords
+   ```
 
-This command:
-1. Fetches and analyzes existing issue content
-2. Extracts requirements and assesses complexity
-3. Provides implementation recommendations
-4. Identifies dependencies and potential challenges
-5. Optionally generates missing documentation with generate-docs flag
+2. **Reference the dictionary** for detailed command syntax:
+   - Browse `docs/dictionary/` for all available commands
+   - Each command file includes examples and parameters
 
-### IDK Command Structure
+3. **Use semantic patterns** for natural language requests:
+   - IDK commands can be embedded in natural language
+   - The AI will recognize and execute IDK patterns
 
-The IDK dictionary is organized into categories:
-- **Core Commands**: CREATE, DELETE, FIX, SELECT
-- **Git Operations**: gh, commit, push, pr, comment
-- **Development**: analyze this, debug this, optimize this
-- **Documentation**: document this, explain this, research this
-- **Quality Assurance**: review this, test this
-- **Workflow**: plan this, roadmap, spec this
+4. **Combine commands** for complex workflows:
+   ```
+   analyze this codebase AND create roadmap WITH improvements
+   ```
 
 ### Benefits of IDK
 
-- **Consistency**: Same vocabulary across all AI assistants
-- **Maintainability**: Single source of truth for command definitions
-- **Extensibility**: Easy to add new commands to the dictionary
-- **Cross-AI Compatibility**: Claude, Gemini, and other AI assistants use the same vocabulary
-- **Zero Installation**: Uses npx for immediate availability
+- **Consistency**: Standardized vocabulary across all AI assistants
+- **Predictability**: Known commands produce expected results
+- **Efficiency**: Reduced back-and-forth clarification
+- **Maintainability**: Centralized command definitions
+- **Cross-Platform**: Works with Claude, ChatGPT, Gemini, and others
+- **Zero Configuration**: Uses npx for immediate availability
+- **Version Controlled**: Dictionary updates through npm versioning
+
+### Advanced Usage
+
+For complex scenarios, IDK supports:
+- **Conditional execution**: `IF condition THEN command`
+- **Batch operations**: `FOR EACH file IN directory DO command`
+- **Pipeline chaining**: `command1 | command2 | command3`
+- **Parameter expansion**: `WITH options FROM config.json`
+
+### Getting Help
+
+- **Command reference**: `docs/dictionary/[category]/[command].md`
+- **NPM package**: https://www.npmjs.com/package/@stillrivercode/information-dense-keywords
+- **Updates**: Run `npx @stillrivercode/information-dense-keywords` regularly
 
 ## Development Best Practices
 
