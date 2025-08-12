@@ -235,7 +235,7 @@ Build engagement optimization tools:
    - Engagement score trending
    - ROI metrics for different outreach strategies
 
-Use API Ninjas timezone and holidays endpoints for accurate data.
+Use workshop API timezone and holidays endpoints for accurate data.
 ```
 
 ### Task 4.5: Performance Optimization (5 minutes)
