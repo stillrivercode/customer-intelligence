@@ -24,9 +24,10 @@ jobs:
           fetch-depth: 0
 
       - name: AI Review
-        uses: stillrivercode/stillriver-ai-workflows@v1
+        uses: stillrivercode/stillriver-ai-workflows@v1.0.13
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           openrouter_api_key: ${{ secrets.OPENROUTER_API_KEY }}
           model: ${{ vars.AI_MODEL || 'anthropic/claude-3.5-sonnet' }}
           review_type: 'comprehensive'
+          post_comment: true
