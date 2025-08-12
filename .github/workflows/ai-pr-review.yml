@@ -26,7 +26,7 @@ jobs:
       - name: AI Review
         uses: stillrivercode/stillriver-ai-workflows@v1
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          openrouter-api-key: ${{ secrets.OPENROUTER_API_KEY }}
-          ai-model: ${{ vars.AI_MODEL || 'anthropic/claude-3.5-sonnet' }}
-          review-type: 'comprehensive'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          openrouter_api_key: ${{ secrets.OPENROUTER_API_KEY }}
+          model: ${{ vars.AI_MODEL || 'anthropic/claude-3.5-sonnet' }}
+          review_type: 'comprehensive'
