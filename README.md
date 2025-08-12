@@ -133,6 +133,34 @@ npm run test:coverage    # Coverage report
 npm run analyze          # Bundle size analysis
 ```
 
+## ⚙️ GitHub Configuration
+
+### Required Repository Secrets
+
+To enable AI-powered workflows (code reviews, etc.), configure these secrets in your repository settings:
+
+- **`OPENROUTER_API_KEY`** - Your API key from [OpenRouter](https://openrouter.ai) for AI code reviews
+  - Required for the AI PR Review workflow to function
+  - Get your key at: https://openrouter.ai/keys
+
+### Optional Repository Variables
+
+- **`AI_MODEL`** - The AI model to use for reviews (defaults to `anthropic/claude-3.5-sonnet`)
+  - Example values: `google/gemini-2.5-pro`, `openai/gpt-4-turbo`
+  - See available models at: https://openrouter.ai/models
+
+### Setting Up Secrets and Variables
+
+1. Go to your repository's Settings → Secrets and variables → Actions
+2. Add `OPENROUTER_API_KEY` as a Repository Secret
+3. (Optional) Add `AI_MODEL` as a Repository Variable
+
+### Manual Review Triggers
+
+The AI PR Review workflow can be triggered manually:
+- **Add label**: `ai-review-needed` to any PR
+- **Comment**: `/review` on any PR
+
 ## 📋 Component Specifications
 
 ### Detailed Technical Specs
