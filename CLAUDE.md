@@ -13,129 +13,40 @@ through GitHub issues and pull requests.
 
 ## Key Features
 
-- **AI Task Automation**: Create issues with `ai-task` label to trigger AI implementation
-- **Automatic PR Generation**: AI creates pull requests with implemented solutions
-- **Cost Monitoring**: Built-in tracking to prevent unexpected API costs
-- **Multiple Architecture Options**: Choose between simplified or enterprise setup
+- **AI-Powered PR Reviews**: Automatic code review with resolvable suggestions
+- **Quality Checks**: Automated linting, testing, and security scanning
+- **Information Dense Keywords**: Structured command vocabulary for AI assistants
+- **Centralized Workflows**: Uses Stillriver AI Workflows for maintainability
 
 ## Getting Started
 
-### 1. Initial Setup
-
-```bash
-# Install the template (includes upstream setup)
-./install.sh
-
-# Activate virtual environment
-source venv/bin/activate
-```
-
-### 2. Configure GitHub Secrets
-
-Required secrets in your repository settings:
-
-- `OPENROUTER_API_KEY` - Your OpenRouter API key (enables multi-model AI support)
-- `GH_PAT` - GitHub Personal Access Token (required for PR creation, needs repo scope minimum)
-
-Optional secrets (only needed for advanced workflows that require cross-workflow triggering):
-
-- Additional scopes for `GH_PAT`: workflow, write:packages, read:org (if cross-workflow triggering is needed)
-
-### 3. Setup Repository Labels
+### Setup Repository Labels
 
 ```bash
 ./scripts/setup-labels.sh
 ```
 
-## Using AI Workflows
+This repository uses a simplified architecture focused on code quality and AI-powered reviews.
 
-### Creating AI Tasks
+## Available Workflows
 
-1. Create a GitHub issue with clear requirements:
-   - **Manual creation**: Use GitHub web interface
-   - **Script creation**: Use `./scripts/create-issue.sh` with `--ai-task` flag for explicit opt-in
-2. **Manually add the `ai-task` label** (no longer added automatically)
-3. AI will automatically process and create a PR
+### AI PR Review
 
-**Note:** As of the latest update, the `ai-task` label is no longer automatically added to new issues.
-You must manually add it to trigger AI processing.
+Automatically reviews pull requests with intelligent feedback:
 
-Example issue:
+- **Triggers**: PR opened, reopened, or `ai-review-needed` label added
+- **Manual trigger**: Comment `/review` on any PR
+- **Features**: Resolvable suggestions, security analysis, best practices review
+- **Labels**: Adds `ai-reviewed` label after completion
 
-```text
-Title: Add user authentication endpoint
-Labels: ai-task
+### Quality Checks
 
-Description:
-- Create POST /api/auth/login endpoint
-- Validate email and password
-- Return JWT token on success
-- Add appropriate error handling
-```
+Comprehensive quality validation for all PRs:
 
-### Available Labels
-
-- `ai-task` - General AI development tasks
-- `ai-bug-fix` - AI-assisted bug fixes
-- `ai-refactor` - Code refactoring requests
-- `ai-test` - Test generation
-- `ai-docs` - Documentation updates
-
-### AI Fix Orchestration Labels
-
-- `ai-fix-all` - Triggers comprehensive AI fixes for all detected issues
-- `ai-orchestrate` - Alternative trigger for coordinated AI fixes
-- `ai-fix-lint` - Automatically added when lint checks fail
-- `ai-fix-security` - Automatically added when security scans fail
-- `ai-fix-tests` - Automatically added when test suites fail
-
-### Orchestration Features
-
-The AI Orchestrator automatically:
-
-- Waits for quality checks to complete before triggering fixes
-- Only runs AI fixes for actual failures (cost-efficient)
-- Executes fixes in dependency order (lint → security/tests → docs)
-- Provides comprehensive status reporting
-- Manages cost controls and circuit breakers
-
-### Debug Mode
-
-Enable debug logging by setting the repository variable `AI_DEBUG_MODE` to `true`:
-
-```bash
-gh variable set AI_DEBUG_MODE --body "true" --repo <your-repo>
-```
-
-This adds detailed debugging information to workflow logs to help troubleshoot trigger issues.
-
-### Emergency Controls
-
-Repository administrators can trigger emergency actions through GitHub Actions:
-
-- **Emergency Stop**: Immediately halt all AI workflows and cancel running jobs
-- **Resume Operations**: Restore normal AI workflow operations
-- **Maintenance Mode**: Temporarily disable AI workflows for system maintenance
-- **Circuit Breaker Reset**: Reset circuit breaker after addressing failures
-- **Cost Limit Override**: Temporarily increase cost limits during emergencies
-
-To use emergency controls:
-
-1. Go to Actions tab → Emergency Controls workflow
-2. Click "Run workflow"
-3. Select desired action and provide a reason
-4. Confirm execution (admin permissions required)
-
-### Timeout Configuration
-
-Centralized timeout settings are now used across all workflows:
-
-- **Workflow timeout**: 30 minutes (emergency controls: 10 minutes)
-- **OpenRouter API setup**: Instant (no installation required)
-- **AI execution tasks**: 20 minutes
-- **AI operations**: 15 minutes
-
-These can be modified by updating the `env` section in workflow files.
+- **Linting**: ESLint and YAML validation
+- **Testing**: Node.js and shell script tests  
+- **Security**: Dependency scanning and ESLint security rules
+- **Auto-labeling**: Adds appropriate labels based on findings
 
 ## OpenRouter API Configuration
 
@@ -194,119 +105,17 @@ OpenRouter integration provides:
 3. Add `OPENROUTER_API_KEY` secret to your repository
 4. Remove old `ANTHROPIC_API_KEY` (no longer needed)
 
-### GitHub Personal Access Token Setup
 
-1. Create a Personal Access Token at <https://github.com/settings/tokens>
-2. Grant it `repo` scope permissions (required for PR creation)
-3. Add it as a secret named `GH_PAT` in repository Settings > Secrets and variables > Actions
-4. Optionally add `workflow` scope if cross-workflow triggering is needed
+## Configuration
 
-**⚠️ Security Considerations:**
-
-- Store `GH_PAT` as a repository secret (never commit to code)
-- Use minimum required scopes (`repo` only unless cross-workflow triggering needed)
-- Regularly rotate tokens (recommended: every 90 days)
-- Monitor token usage in GitHub Settings > Personal access tokens
-- Revoke immediately if compromised
-
-## Cost Management
-
-### Estimated Costs
-
-- **Simple tasks**: $0.10 - $0.50 per issue
-- **Complex features**: $1.00 - $5.00 per issue
-- **Monthly estimates**:
-  - Light usage (10-20 tasks): $20-50
-  - Heavy usage (100+ tasks): $150-500
-
-### Cost Controls
-
-- Set spending limits in workflow configuration
-- Monitor usage through GitHub Actions logs
-- Use `ai-task-small` label for simple tasks
-
-### Advanced Configuration
-
-#### MAX_PROMPT_SIZE (GitHub Secret)
-
-Control the maximum allowed prompt size for AI tasks:
-
-```bash
-# Set via GitHub CLI (recommended for large prompts)
-gh secret set MAX_PROMPT_SIZE --body "100000"
-
-# Or via GitHub web interface:
-# Settings → Secrets and variables → Actions → New repository secret
-```
-
-- **Default**: 50,000 characters
-- **Use cases**:
-  - Increase for complex issues with large file contexts
-  - Decrease to limit AI costs on simple tasks
-- **Note**: Larger prompts may increase API costs
-
-## Architecture Options
-
-### Simplified Architecture (Default)
-
-- GitHub Actions only
-- No external dependencies
-- Best for teams of 1-10 developers
-- Estimated cost: $20-150/month
-
-### Enterprise Architecture
-
-- Requires additional setup (see dev-docs/architecture.md)
-- Supports multiple AI providers
-- Advanced monitoring and controls
-- Best for teams of 15+ developers
-- Estimated cost: $1,000-3,000/month
-
-## Workflow Commands
-
-```bash
-# Create GitHub issue (with optional AI automation)
-./scripts/create-issue.sh -t "Issue title" -b "Description"
-./scripts/create-issue.sh -t "Issue title" --ai-task  # Explicit AI opt-in
-
-# Run an AI task manually
-./scripts/execute-ai-task.sh ISSUE_NUMBER
-
-# Create a PR from AI changes
-./scripts/create-pr.sh
-
-# Check AI usage costs
-./scripts/check-costs.sh
-```
-
-## Security Features
-
-### Workflow Security Controls
-
-The AI task workflow includes several security measures:
-
-- **Permission Restrictions**: Limited to minimal required permissions (contents, issues, pull-requests, actions)
-- **Timeout Controls**:
-  - Job-level timeout: 30 minutes maximum
-  - Step-level timeouts for long-running operations (AI execution: 20 min, no installation delays)
-- **Concurrency Protection**: Prevents parallel runs of the same workflow using issue-specific groups
-- **Token Scope Limitation**: Uses explicit permission declarations to restrict workflow capabilities
-
-### Security Best Practices
-
-- Workflows automatically timeout to prevent runaway processes
-- Concurrent executions are blocked to prevent resource conflicts
-- Minimal permissions reduce potential security exposure
-- All operations are logged for audit purposes
+The repository requires minimal configuration - just the OPENROUTER_API_KEY secret for AI PR reviews.
 
 ## Best Practices
 
-1. **Clear Issue Descriptions**: The better the description, the better the AI output
-2. **Incremental Changes**: Break large features into smaller tasks
-3. **Review AI Code**: Always review AI-generated code before merging
-4. **Test Everything**: AI code should pass all tests before merging
-5. **Cost Awareness**: Monitor your usage to avoid surprises
-6. **Security Monitoring**: Review workflow logs for any unusual activity
+1. **Use IDK Commands**: Leverage the Information Dense Keywords system for consistent AI interactions
+2. **Review AI Feedback**: Always review AI-generated suggestions before applying
+3. **Quality First**: Ensure all quality checks pass before merging
+4. **Security Awareness**: Monitor security scan results and address issues promptly
 
 ## Code Quality Requirements
 
@@ -432,118 +241,139 @@ pre-commit run detect-secrets bandit --all-files
 SKIP=bandit pre-commit run --all-files
 ```
 
-## Troubleshooting
-
-### Common Issues
-
-1. **Workflow not triggering**
-   - Check that labels are correctly applied
-   - Verify GitHub secrets are set
-   - Check Actions tab for errors
-
-2. **AI produces incorrect code**
-   - Improve issue description
-   - Add examples or specifications
-   - Use smaller, focused tasks
-
-3. **High costs**
-   - Review task complexity
-   - Use simplified architecture
-   - Set spending limits
-
 ## Project Structure
 
-- **scripts/** - Automation scripts for AI workflows
-- **docs/** - Detailed documentation and guides
-- **.github/workflows/** - GitHub Actions workflows (if implemented)
+- **scripts/** - Essential setup script (setup-labels.sh)
+- **docs/** - Documentation including IDK dictionary
+- **.github/workflows/** - Quality checks and AI PR review workflows
+- **app/** - React application source code
 
 ## Need Help?
 
-- Check `docs/simplified-architecture.md` for quick start guide
-- See `dev-docs/architecture.md` for advanced setup
 - Review workflow logs in GitHub Actions tab
-- Create an issue with `help` label for support
+- Check the IDK dictionary in `docs/dictionary/` for available commands
+- Create an issue for support
 
-## Workflow Specific Memory
+## Information Dense Keywords Dictionary (IDK)
 
-- Update @docs/workflow-diagram.md when gha workflow files change
-- `@README-dev.md` is for template related development
-- `@README.md` is for those using the template
+This project uses the Information Dense Keywords Dictionary - a standardized vocabulary system for AI assistants to execute development tasks consistently.
 
-## Information Dense Keywords Dictionary
+### Installation & Updates
 
-This project uses the Information Dense Keywords Dictionary (IDK) for consistent AI assistant commands.
+```bash
+# Install or update IDK dictionary (recommended before starting work)
+npx @stillrivercode/information-dense-keywords
 
-### Available IDK Commands
-
-#### CREATE github issue WITH template user-story
-
-Creates a GitHub issue and comprehensive user story document in a unified workflow.
-
-Usage:
-```
-CREATE github issue WITH template user-story FOR "Add user authentication"
-CREATE github issue WITH template user-story FOR "Fix login bug" WITH labels "bug,frontend" AND ai-task
+# The dictionary is installed to docs/dictionary/
 ```
 
-This command:
-1. Creates GitHub issue with appropriate labels
-2. Generates comprehensive user story in `user-stories/issue-NUMBER-title.md`
-3. Includes acceptance criteria, test scenarios, and technical requirements
-4. Provides cross-references to related documentation
-5. Supports AI workflow integration with ai-task flag
+### Quick Reference
 
-#### CREATE github issue WITH template spec
+The IDK system provides a structured command syntax for common development tasks. Full documentation is available in `docs/dictionary/` after installation.
 
-Creates a GitHub issue and detailed technical specification document in a unified workflow.
+#### Core Command Categories
 
-Usage:
+1. **Core Operations** (`docs/dictionary/core/`)
+   - `CREATE` - Generate new resources
+   - `DELETE` - Remove existing resources  
+   - `FIX` - Repair or correct issues
+   - `SELECT` - Query and retrieve information
+
+2. **Git & GitHub** (`docs/dictionary/git/`)
+   - `gh` - GitHub CLI operations
+   - `commit` - Intelligent commit message generation
+   - `push` - Smart push with checks
+   - `pr` - Pull request management
+   - `comment` - PR/issue commenting
+
+3. **Development** (`docs/dictionary/development/`)
+   - `analyze this` - Code analysis and architecture review
+   - `debug this` - Systematic debugging approach
+   - `optimize this` - Performance optimization
+   - `migrate` - Code migration and upgrades
+
+4. **Documentation** (`docs/dictionary/documentation/`)
+   - `document this` - Generate comprehensive documentation
+   - `explain this` - Create explanations for complex code
+   - `research this` - Research and gather information
+
+5. **Quality Assurance** (`docs/dictionary/quality-assurance/`)
+   - `review this` - Code review and feedback
+   - `test this` - Test generation and validation
+
+6. **Workflow** (`docs/dictionary/workflow/`)
+   - `plan this` - Project planning and task breakdown
+   - `roadmap` - Create development roadmaps
+   - `spec this` - Generate technical specifications
+
+### Example Commands
+
+```bash
+# Create a new feature with full documentation
+CREATE feature "user authentication" WITH tests AND documentation
+
+# Analyze and optimize existing code
+analyze this module "src/api/handlers" FOR performance
+optimize this function "processData" WITH benchmark
+
+# Generate comprehensive test suite
+test this component "UserProfile" WITH edge-cases AND mocks
+
+# Create a development roadmap
+roadmap FOR "Q1 2024 features" WITH milestones AND dependencies
 ```
-CREATE github issue WITH template spec FOR "User Authentication Architecture"
-CREATE github issue WITH template spec FOR "API Design" LINKED TO user-story-issue 25 WITH labels "backend,api"
-```
 
-This command:
-1. Creates GitHub issue for technical specification
-2. Generates detailed technical spec in `specs/issue-NUMBER-title.md`
-3. Includes architecture diagrams, API specifications, and implementation details
-4. Links to related user stories using LINKED TO parameter
-5. Adds cross-reference comments to linked issues
+### IDK Integration Features
 
-#### analyze this github issue
+- **Contextual Awareness**: Commands understand project structure and conventions
+- **Cross-Reference Support**: Automatic linking between related documents
+- **Template-Based Generation**: Consistent output formats
+- **Progressive Enhancement**: Commands can be chained and combined
+- **Version Control Integration**: Git-aware operations
 
-Analyzes existing GitHub issue for requirements, scope, and implementation considerations.
+### Working with IDK
 
-Usage:
-```
-analyze this github issue 25
-analyze this github issue 100 AND generate-docs
-```
+1. **Always install/update IDK** at the start of a session:
+   ```bash
+   npx @stillrivercode/information-dense-keywords
+   ```
 
-This command:
-1. Fetches and analyzes existing issue content
-2. Extracts requirements and assesses complexity
-3. Provides implementation recommendations
-4. Identifies dependencies and potential challenges
-5. Optionally generates missing documentation with generate-docs flag
+2. **Reference the dictionary** for detailed command syntax:
+   - Browse `docs/dictionary/` for all available commands
+   - Each command file includes examples and parameters
 
-### IDK Command Structure
+3. **Use semantic patterns** for natural language requests:
+   - IDK commands can be embedded in natural language
+   - The AI will recognize and execute IDK patterns
 
-The IDK dictionary is organized into categories:
-- **Core Commands**: CREATE, DELETE, FIX, SELECT
-- **Git Operations**: gh, commit, push, pr, comment
-- **Development**: analyze this, debug this, optimize this
-- **Documentation**: document this, explain this, research this
-- **Quality Assurance**: review this, test this
-- **Workflow**: plan this, roadmap, spec this
+4. **Combine commands** for complex workflows:
+   ```
+   analyze this codebase AND create roadmap WITH improvements
+   ```
 
 ### Benefits of IDK
 
-- **Consistency**: Same vocabulary across all AI assistants
-- **Maintainability**: Single source of truth for command definitions
-- **Extensibility**: Easy to add new commands to the dictionary
-- **Cross-AI Compatibility**: Claude, Gemini, and other AI assistants use the same vocabulary
-- **Zero Installation**: Uses npx for immediate availability
+- **Consistency**: Standardized vocabulary across all AI assistants
+- **Predictability**: Known commands produce expected results
+- **Efficiency**: Reduced back-and-forth clarification
+- **Maintainability**: Centralized command definitions
+- **Cross-Platform**: Works with Claude, ChatGPT, Gemini, and others
+- **Zero Configuration**: Uses npx for immediate availability
+- **Version Controlled**: Dictionary updates through npm versioning
+
+### Advanced Usage
+
+For complex scenarios, IDK supports:
+- **Conditional execution**: `IF condition THEN command`
+- **Batch operations**: `FOR EACH file IN directory DO command`
+- **Pipeline chaining**: `command1 | command2 | command3`
+- **Parameter expansion**: `WITH options FROM config.json`
+
+### Getting Help
+
+- **Command reference**: `docs/dictionary/[category]/[command].md`
+- **NPM package**: https://www.npmjs.com/package/@stillrivercode/information-dense-keywords
+- **Updates**: Run `npx @stillrivercode/information-dense-keywords` regularly
 
 ## Development Best Practices
 

@@ -14,7 +14,7 @@ For common AI assistant guidance, see [docs/AI.md](docs/AI.md) which provides sh
 
 ## IDK Commands
 
-Use Information Dense Keywords Dictionary vocabulary for consistent commands:
+Use Information Dense Keywords Dictionary vocabulary for consistent commands. The full dictionary is available as an [npm package](https://www.npmjs.com/package/@stillrivercode/information-dense-keywords).
 
 - `CREATE github issue WITH template user-story FOR "TITLE"` - Create GitHub issue and user story
 - `CREATE github issue WITH template spec FOR "TITLE"` - Create GitHub issue and technical spec
