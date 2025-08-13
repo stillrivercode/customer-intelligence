@@ -406,7 +406,6 @@ npm run dev
 - [ ] Screen sharing setup with high-resolution display
 - [ ] Code editor with syntax highlighting
 - [ ] Browser with developer tools
-- [ ] API Ninjas account with valid key
 
 ### Workshop Materials
 - [ ] Participant setup guide (sent 24 hours prior)

@@ -236,6 +236,8 @@ Build engagement optimization tools:
    - ROI metrics for different outreach strategies
 
 Use workshop API timezone and holidays endpoints for accurate data.
+
+> **📝 Note on API Availability:** The timezone and holidays endpoints may require premium subscriptions. The workshop application includes mock data fallbacks for these scenarios. When implementing, consider using the geocoding endpoint first to get coordinates, then attempting timezone lookups as a workaround.
 ```
 
 ### Task 4.5: Performance Optimization (5 minutes)

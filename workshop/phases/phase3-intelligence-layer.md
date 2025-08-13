@@ -347,6 +347,8 @@ const fetchCustomerIntelligence = async (customer) => {
   
   return { domainData, newsData, locationData };
 };
+
+> **📝 Note on API Availability:** Some endpoints may be unavailable or require premium subscriptions. The workshop application includes mock data fallbacks for these scenarios. The code above represents the correct implementation when all API endpoints are fully functional.
 ```
 
 ### Issue: Performance degradation
