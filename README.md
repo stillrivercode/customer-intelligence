@@ -4,7 +4,7 @@ A comprehensive B2B SaaS customer health monitoring dashboard that demonstrates 
 
 ## 🎯 Workshop Overview
 
-This project serves as the primary example for Stillriver Software Solutions' **Document Driven Development Workshop Series**. Participants build a production-ready customer intelligence platform while learning to leverage AI for specification-driven code generation.
+This project serves as the primary example for Stillriver Software Solutions' **Document Driven Development Workshop Series**, delivered in partnership with **[ThisDot](https://www.thisdot.co/)**. Participants build a production-ready customer intelligence platform while learning to leverage AI for specification-driven code generation.
 
 ### Key Learning Objectives
 
@@ -257,7 +257,7 @@ MIT License - Free for educational and commercial use.
 
 ## 🤝 About Stillriver
 
-This workshop is part of the **Document Driven Development Series** by [Stillriver Software Solutions LLC](https://stillriver.io). We specialize in AI-powered development methodologies that accelerate software delivery through specification-driven code generation.
+This workshop is part of the **Document Driven Development Series** by [Stillriver Software Solutions LLC](https://stillriver.io), delivered in partnership with **[ThisDot](https://www.thisdot.co/)**. We specialize in AI-powered development methodologies that accelerate software delivery through specification-driven code generation.
 
 **Ready to experience the future of development?**
 

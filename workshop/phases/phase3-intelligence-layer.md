@@ -194,7 +194,7 @@ automated news monitoring and analysis.
 Create a MarketIntelligenceWidget React component based on the specification.
 
 Features needed:
-- Fetch news using apiNinjas.news()
+- Fetch news using workshop API news endpoint
 - Implement basic sentiment analysis (keyword-based)
 - Categorize news types (funding, product, hiring, etc.)
 - Timeline display with article cards
@@ -340,13 +340,15 @@ const sentimentKeywords = {
 // Batch related calls
 const fetchCustomerIntelligence = async (customer) => {
   const [domainData, newsData, locationData] = await Promise.all([
-    apiNinjas.whois(customer.domain),
-    apiNinjas.news(customer.name),
-    apiNinjas.city(customer.city)
+    stillriverApi.whois(customer.domain),
+    stillriverApi.news(customer.name),
+    stillriverApi.city(customer.city)
   ]);
   
   return { domainData, newsData, locationData };
 };
+
+> **📝 Note on API Availability:** Some endpoints may be unavailable or require premium subscriptions. For the purposes of this workshop, you will need to implement mock data fallbacks for these scenarios. The code above represents the correct implementation when all API endpoints are fully functional. Consider returning sample data when API calls fail to ensure the dashboard remains functional during development.
 ```
 
 ### Issue: Performance degradation

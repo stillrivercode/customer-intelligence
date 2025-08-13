@@ -7,7 +7,7 @@ Workshop Duration: 2-3 hours
 
 ## Executive Summary
 
-This document outlines the Customer Intelligence Dashboard example for the Document Driven Development (DDD) workshop series. The dashboard demonstrates how to build a B2B SaaS customer health monitoring system using API Ninjas endpoints and mock customer data, eliminating the need for external CRM systems while providing a realistic, practical learning experience.
+This document outlines the Customer Intelligence Dashboard example for the Document Driven Development (DDD) workshop series. The dashboard demonstrates how to build a B2B SaaS customer health monitoring system using a workshop API proxy and mock customer data, eliminating the need for external API keys while providing a realistic, practical learning experience.
 
 ## Workshop Structure
 
@@ -29,7 +29,7 @@ This document outlines the Customer Intelligence Dashboard example for the Docum
 ### 🛠️ Templates & Resources
 
 - **[Code Templates](./templates/)** - Starter code and solutions
-- **[API Documentation](./resources/api-reference.md)** - API Ninjas integration guide
+- **[API Documentation](./resources/api-reference.md)** - Workshop API integration guide
 - **[Troubleshooting](./resources/troubleshooting.md)** - Common issues and solutions
 - **[Performance Guide](./resources/performance.md)** - Optimization best practices
 
@@ -47,7 +47,7 @@ By the end of this workshop, participants will be able to:
 ## Prerequisites
 
 - **Technical**: Basic React knowledge, familiarity with APIs
-- **Setup**: Node.js 18+, API Ninjas account (free tier)
+- **Setup**: Node.js 18+ (no external API accounts required)
 - **Time**: 2-3 hours dedicated workshop time
 
 ## Success Metrics
@@ -83,10 +83,10 @@ By the end of this workshop, participants will be able to:
    npm install
    ```
 
-3. **Set up API key**
+3. **No API setup required**
    ```bash
-   cp .env.example .env
-   # Edit .env with your API Ninjas key
+   # The workshop uses a custom API proxy
+   # No external API keys needed
    ```
 
 4. **Start the workshop**

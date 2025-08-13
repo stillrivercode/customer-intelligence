@@ -1,25 +1,21 @@
-# API Ninjas Integration Reference
+# Workshop API Integration Reference
 
 ## Overview
 
-This guide provides comprehensive documentation for integrating with API Ninjas endpoints used in the Customer Intelligence Dashboard workshop.
+This guide provides comprehensive documentation for integrating with the workshop API endpoints used in the Customer Intelligence Dashboard workshop.
 
 ## Getting Started
 
-### API Key Setup
-1. Visit [api-ninjas.com](https://api-ninjas.com)
-2. Create a free account (no credit card required)
-3. Get your API key from the dashboard
-4. Add to your `.env` file:
-   ```
-   VITE_API_NINJAS_KEY=your_api_key_here
-   ```
+### No Setup Required
+1. The workshop uses a custom API proxy at `https://api.stillriver.info/`
+2. No API keys or account creation required
+3. Zero configuration needed to get started
 
-### Free Tier Limits
-- **1,000 requests per month** included
-- **1 request per second** rate limit
-- **No expiration** on free accounts
-- **No credit card required**
+### Workshop API Features
+- **No limits** for workshop duration
+- **No authentication** required
+- **Standard REST patterns** for easy integration
+- **CORS enabled** for browser requests
 
 ## Endpoint Documentation
 
@@ -27,7 +23,7 @@ This guide provides comprehensive documentation for integrating with API Ninjas 
 
 **Purpose**: Get domain registration and ownership information
 
-**Endpoint**: `GET https://api.api-ninjas.com/v1/whois`
+**Endpoint**: `GET https://api.stillriver.info/whois`
 
 **Parameters**:
 - `domain` (required): Domain name to lookup

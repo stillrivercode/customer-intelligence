@@ -2,7 +2,7 @@
 
 ## Dashboard Purpose
 
-The Customer Intelligence Dashboard helps account managers and customer success teams monitor customer health by combining internal customer data (mocked) with external market intelligence from API Ninjas. This example showcases:
+The Customer Intelligence Dashboard helps account managers and customer success teams monitor customer health by combining internal customer data (mocked) with external market intelligence from the workshop API. This example showcases:
 
 - **Progressive complexity** from simple displays to AI-orchestrated insights
 - **Real-world business value** through customer health scoring
@@ -48,8 +48,8 @@ Communication planning tools:
 - **React Context** for state management
 
 ### API Integration
-- **API Ninjas** free tier (no credit card required)
-- **Rate limiting** to respect API constraints
+- **Workshop API** (no setup required)
+- **Rate limiting** demonstration for production patterns
 - **Caching layer** for performance optimization
 - **Error handling** with graceful degradation
 
@@ -59,7 +59,7 @@ Communication planning tools:
 - **Performance monitoring** and optimization
 - **Accessibility** compliance (WCAG)
 
-## API Ninjas Endpoints Used
+## Workshop API Endpoints
 
 | Endpoint | Purpose | Dashboard Feature |
 |----------|---------|-------------------|
@@ -72,6 +72,8 @@ Communication planning tools:
 | `/timezone` | Timezone information | Meeting scheduler |
 | `/holidays` | Holiday calendar | Communication planner |
 | `/businessdays` | Business day calculator | SLA tracking |
+
+**Base URL**: `https://api.stillriver.info/`
 
 ## Mock Data Structure
 
@@ -172,15 +174,15 @@ This workshop demonstrates **Document Driven Development (DDD)** principles:
 
 ## Cost Considerations
 
-### API Usage (Free Tier)
-- **1,000 requests/month** included
-- **Rate limit**: 1 request/second
-- **No credit card required** for workshop
+### Workshop API Usage
+- **No limits** for workshop duration
+- **No registration required** - instant access
+- **No credit card needed** for workshop
 
 ### Estimated Workshop Usage
 - **~50 API calls** per participant
-- **Well within free limits** for workshop duration
-- **Production usage**: ~$10-20/month for typical dashboard
+- **Zero cost** for workshop learning
+- **Production usage**: Would require API Ninjas or similar service (~$10-20/month)
 
 ---
 

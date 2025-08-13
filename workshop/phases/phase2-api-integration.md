@@ -1,11 +1,11 @@
 # Phase 2: API Integration (45 minutes)
 
-**Objective**: Enhance dashboard with real API data from API Ninjas
+**Objective**: Enhance dashboard with real API data from the workshop API
 
 ## Learning Goals
 
 By the end of this phase, you will:
-- ✅ Set up API Ninjas client with rate limiting
+- ✅ Set up workshop API client
 - ✅ Fetch domain information (whois) and website status
 - ✅ Display real-time data in widgets
 - ✅ Implement error handling and loading states
@@ -19,22 +19,19 @@ By the end of this phase, you will:
 
 ## Pre-requisites
 
-### API Key Setup
+### No Setup Required
 ```bash
-# Copy environment template
-cp .env.example .env
-
-# Edit .env file and add your API key
-VITE_API_NINJAS_KEY=your_actual_api_key_here
+# No API keys needed!
+# Workshop uses Stillriver's proxy at https://api.stillriver.info/
 ```
 
-**Get your free API key**: [api-ninjas.com](https://api-ninjas.com) (no credit card required)
+**Benefits**: Zero friction startup - no account creation or API keys needed
 
 ## Tasks Overview
 
 ### Task 2.1: Rate Limiter Implementation (10 minutes)
 
-**Why Rate Limiting?** API Ninjas free tier allows 1 request per second.
+**Why Rate Limiting?** Demonstrates production patterns for API management.
 
 **Specification**: Create a rate limiter that queues requests and executes them sequentially with proper delays.
 
@@ -78,15 +75,15 @@ class RateLimiter {
 export const apiLimiter = new RateLimiter(1);
 ```
 
-### Task 2.2: API Ninjas Service Layer (15 minutes)
+### Task 2.2: Workshop API Service Layer (15 minutes)
 
-**Specification**: Create a service layer that abstracts API Ninjas endpoints with proper error handling and caching.
+**Specification**: Create a service layer that abstracts workshop API endpoints with proper error handling and caching.
 
-**Create**: `src/services/apiNinjas.js`
+**Create**: `src/services/workshopApi.js`
 
 **AI Prompt**:
 ```
-Create an API Ninjas service layer with:
+Create a workshop API service layer with:
 
 Endpoints to implement:
 - whois(domain) - Get domain registration info
@@ -101,12 +98,12 @@ Requirements:
 - Integrate with rate limiter
 - Handle API errors gracefully
 - Add request/response logging
-- Support API key from environment
+- No API key required
 - Return consistent error format
 - Include JSDoc documentation
 
-Base URL: https://api-ninjas.com/v1
-Header: X-Api-Key: ${API_KEY}
+Base URL: https://api.stillriver.info/
+Header: Content-Type: application/json
 ```
 
 **Expected Structure**:
@@ -114,20 +111,18 @@ Header: X-Api-Key: ${API_KEY}
 import axios from 'axios';
 import { apiLimiter } from '../utils/rateLimiter';
 
-const API_KEY = import.meta.env.VITE_API_NINJAS_KEY;
-const BASE_URL = 'https://api.api-ninjas.com/v1';
+const BASE_URL = 'https://api.stillriver.info/';
 
 const client = axios.create({
   baseURL: BASE_URL,
   headers: {
-    'X-Api-Key': API_KEY,
     'Content-Type': 'application/json'
   }
 });
 
-export const apiNinjas = {
+export const workshopApi = {
   whois: (domain) => 
-    apiLimiter.add(() => client.get(`/whois?domain=${domain}`)),
+    apiLimiter.add(() => client.get(`whois?domain=${domain}`)),
   // ... other methods
 };
 ```
@@ -163,8 +158,8 @@ companies through their domain age, registration status, and website availabilit
 - Error message with retry button
 
 ### Data Sources
-- API Ninjas /whois endpoint for domain info
-- API Ninjas /urllookup endpoint for website status
+- Workshop API /whois endpoint for domain info
+- Workshop API /urllookup endpoint for website status
 
 ## Acceptance Criteria
 - [ ] Domain age calculated correctly
@@ -182,7 +177,7 @@ Create a DomainHealthWidget React component based on the specification.
 
 Requirements:
 - Use React hooks for state management
-- Fetch data from apiNinjas service
+- Fetch data from workshopApi service
 - Display domain age, registration status, website availability
 - Include loading states and error handling
 - Use Tailwind CSS for styling
@@ -252,15 +247,13 @@ After completing the tasks, verify:
 ## Common Issues & Solutions
 
 ### Issue: CORS errors
-**Solution**: API Ninjas supports CORS, but verify your API key:
+**Solution**: Workshop API supports CORS, test connectivity:
 ```javascript
-// Test your API key
-const testKey = async () => {
+// Test API connectivity
+const testApi = async () => {
   try {
-    const response = await fetch('https://api.api-ninjas.com/v1/city?name=London', {
-      headers: { 'X-Api-Key': 'your-key' }
-    });
-    console.log('API Key valid:', response.ok);
+    const response = await fetch('https://api.stillriver.info/city?name=London');
+    console.log('API accessible:', response.ok);
   } catch (error) {
     console.error('API Error:', error);
   }
@@ -275,12 +268,12 @@ console.log('Queue length:', this.queue.length);
 console.log('Processing:', this.processing);
 ```
 
-### Issue: Environment variables not loading
-**Solution**: Verify Vite environment variable naming:
+### Issue: API requests failing
+**Solution**: Verify base URL configuration:
 ```javascript
-// Must start with VITE_ for Vite to expose to client
-const apiKey = import.meta.env.VITE_API_NINJAS_KEY;
-console.log('API Key loaded:', !!apiKey);
+// Check API configuration
+const BASE_URL = 'https://api.stillriver.info/';
+console.log('Using API base URL:', BASE_URL);
 ```
 
 ### Issue: Domain age calculation wrong
@@ -318,19 +311,19 @@ const getCachedData = (key) => {
 Group API calls when possible:
 ```javascript
 // Instead of individual calls
-const domainData = await apiNinjas.whois(domain);
-const websiteData = await apiNinjas.urlLookup(website);
+const domainData = await stillriverApi.whois(domain);
+const websiteData = await stillriverApi.urlLookup(website);
 
 // Batch them
 const [domainData, websiteData] = await Promise.all([
-  apiNinjas.whois(domain),
-  apiNinjas.urlLookup(website)
+  stillriverApi.whois(domain),
+  stillriverApi.urlLookup(website)
 ]);
 ```
 
 ## Phase 2 Success Criteria
 
-✅ **API Integration**: Successfully calling API Ninjas endpoints
+✅ **API Integration**: Successfully calling workshop API endpoints
 ✅ **Rate Limiting**: Requests properly throttled
 ✅ **Data Display**: Real domain and website information shown
 ✅ **Error Handling**: Graceful degradation when APIs fail
@@ -338,7 +331,7 @@ const [domainData, websiteData] = await Promise.all([
 
 ## Security Considerations
 
-- ✅ **API Key Security**: Never commit API keys
+- ✅ **API Security**: Workshop API requires no authentication
 - ✅ **Error Sanitization**: Don't expose internal errors to UI
 - ✅ **Rate Limiting**: Prevent API abuse
 - ✅ **Input Validation**: Validate domains before API calls
@@ -350,7 +343,7 @@ When you've successfully completed all tasks:
 1. **Demo API integration**: Show live data from different customers
 2. **Test error scenarios**: Demonstrate error handling
 3. **Verify performance**: Check rate limiting in network tab
-4. **Review security**: Confirm API key is not exposed
+4. **Review implementation**: Confirm clean API integration patterns
 
 **Time Check**: This phase should take ~45 minutes. Focus on core API integration if running over.
 
@@ -360,6 +353,6 @@ When you've successfully completed all tasks:
 
 ## Additional Resources
 
-- **API Ninjas Documentation**: [api-ninjas.com/documentation](https://api-ninjas.com/documentation)
+- **Workshop API**: No additional documentation needed - follows standard REST patterns
 - **Axios Documentation**: [axios-http.com](https://axios-http.com)
 - **Rate Limiting Patterns**: [engineering.paypal.com/rate-limiting](https://medium.com/paypal-engineering/rate-limiting-a-powerful-tool-to-improve-stability-and-ux-4027d0d5e42b)
