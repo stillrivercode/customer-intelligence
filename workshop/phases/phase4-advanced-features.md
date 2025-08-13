@@ -237,7 +237,7 @@ Build engagement optimization tools:
 
 Use workshop API timezone and holidays endpoints for accurate data.
 
-> **📝 Note on API Availability:** The timezone and holidays endpoints may require premium subscriptions. The workshop application includes mock data fallbacks for these scenarios. When implementing, consider using the geocoding endpoint first to get coordinates, then attempting timezone lookups as a workaround.
+> **📝 Note on API Availability:** The timezone and holidays endpoints may require premium subscriptions. For the purposes of this workshop, you will need to implement mock data fallbacks for these scenarios. When implementing, consider using the geocoding endpoint first to get coordinates, then attempting timezone lookups as a workaround. Return sample timezone/holiday data when API calls fail to keep the feature functional.
 ```
 
 ### Task 4.5: Performance Optimization (5 minutes)
